@@ -1,5 +1,0 @@
-classes= 20
-train  = /darknet/train.txt
-valid  = /darknet/2007_test.txt
-names = data/voc.names
-backup = backup

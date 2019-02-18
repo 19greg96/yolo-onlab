@@ -30,7 +30,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     network *net = nets[0];
 
     int imgs = net->batch * net->subdivisions * ngpus;
-    printf("Learning Rate: %g, Momentum: %g, Decay: %g\n", net->learning_rate, net->momentum, net->decay);
+    printf("Learning Rate: %g, Momentum: %g, Decay: %g, 'imgs' = %d\n", net->learning_rate, net->momentum, net->decay, imgs);
     data train, buffer;
 
     layer l = net->layers[net->n - 1];
@@ -59,13 +59,14 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     double time;
     int count = 0;
     //while(i*imgs < N*120){
+	printf("May batches: %d\n", net->max_batches);
     while(get_current_batch(net) < net->max_batches){
         if(l.random && count++%10 == 0){
-            printf("Resizing\n");
+            printf("Resizing ");
             int dim = (rand() % 10 + 10) * 32;
             if (get_current_batch(net)+200 > net->max_batches) dim = 608;
             //int dim = (rand() % 4 + 16) * 32;
-            printf("%d\n", dim);
+            printf("DIM = %d\n", dim);
             args.w = dim;
             args.h = dim;
 
@@ -109,7 +110,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
            }
          */
 
-        printf("Loaded: %lf seconds\n", what_time_is_it_now()-time);
+        // printf("Loaded: %lf seconds\n", what_time_is_it_now()-time);
 
         time=what_time_is_it_now();
         float loss = 0;
@@ -123,11 +124,12 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         loss = train_network(net, train);
 #endif
         if (avg_loss < 0) avg_loss = loss;
-        avg_loss = avg_loss*.9 + loss*.1;
+        avg_loss = avg_loss*.9 + loss*.1; // rolling avarge
 
         i = get_current_batch(net);
-        printf("%ld: %f, %f avg, %f rate, %lf seconds, %d images\n", get_current_batch(net), loss, avg_loss, get_current_rate(net), what_time_is_it_now()-time, i*imgs);
+		// printf("%ld: %f, %f avg, %f rate, %lf seconds, %d images\n", get_current_batch(net), loss, avg_loss, get_current_rate(net), what_time_is_it_now()-time, i*imgs);
         if(i%100==0){
+			printf("%ld: %f, %f avg, %f rate, %d images\n", get_current_batch(net), loss, avg_loss, get_current_rate(net), i*imgs);
 #ifdef GPU
             if(ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif

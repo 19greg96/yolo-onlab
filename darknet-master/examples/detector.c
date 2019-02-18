@@ -59,7 +59,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     double time;
     int count = 0;
     //while(i*imgs < N*120){
-	printf("May batches: %d\n", net->max_batches);
+	printf("Max batches: %d\n", net->max_batches);
     while(get_current_batch(net) < net->max_batches){
         if(l.random && count++%10 == 0){
             printf("Resizing ");
@@ -127,9 +127,15 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         avg_loss = avg_loss*.9 + loss*.1; // rolling avarge
 
         i = get_current_batch(net);
-		// printf("%ld: %f, %f avg, %f rate, %lf seconds, %d images\n", get_current_batch(net), loss, avg_loss, get_current_rate(net), what_time_is_it_now()-time, i*imgs);
+		printf("%ld: %f, progress: %.2f, loss: %f, avg loss: %f, rate: %f, time: %lf seconds, num images: %d\n",
+				get_current_batch(net),
+				((float)get_current_batch(net) / (float)net->max_batches) * 100.0f,
+				loss,
+				avg_loss,
+				get_current_rate(net),
+				what_time_is_it_now()-time,
+				i*imgs);
         if(i%100==0){
-			printf("%ld: %f, %f avg, %f rate, %d images\n", get_current_batch(net), loss, avg_loss, get_current_rate(net), i*imgs);
 #ifdef GPU
             if(ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif

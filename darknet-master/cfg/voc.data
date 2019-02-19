@@ -1,6 +1,6 @@
 classes= 20
 train  = train.txt
 valid  = 2007_test.txt
-names = voc.names
+names = data/voc.names
 backup = backup
 

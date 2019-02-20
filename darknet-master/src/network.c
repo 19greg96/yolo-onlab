@@ -248,7 +248,7 @@ float get_network_cost(network net)
     return sum/count;
 }
 
-float get_network_delta(network net)
+float get_network_delta_(network net)
 {
     int i;
     float sum = 0;

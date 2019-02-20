@@ -257,7 +257,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             if (i < net.burn_in * 3) fprintf(stderr, "\n Tensor Cores are disabled until the first %d iterations are reached.", 3 * net.burn_in);
             else fprintf(stderr, "\n Tensor Cores are used.");
         }
-        printf("\n %d / %d: %f, %f avg loss, %f delta, %f learning rate, %lf seconds, %d images\n", get_current_batch(net), net.max_batches, loss, avg_loss, get_network_delta(net), get_current_rate(net), (what_time_is_it_now() - time), i*imgs);
+        printf("\n %d / %d: %f, %f avg loss, %f delta, %f learning rate, %lf seconds, %d images\n", get_current_batch(net), net.max_batches, loss, avg_loss, get_network_delta_(net), get_current_rate(net), (what_time_is_it_now() - time), i*imgs);
 
         int draw_precision = 0;
         if (calc_map && (i >= calc_map_for_each || i == net.max_batches)) {

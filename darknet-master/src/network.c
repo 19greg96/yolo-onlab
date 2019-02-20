@@ -248,6 +248,20 @@ float get_network_cost(network net)
     return sum/count;
 }
 
+float get_network_delta(network net)
+{
+    int i;
+    float sum = 0;
+    int count = 0;
+    for(i = 0; i < net.n; ++i){
+        if(net.layers[i].delta){
+            sum += net.layers[i].delta[0];
+            ++count;
+        }
+    }
+    return sum/count;
+}
+
 int get_predicted_class_network(network net)
 {
     float *out = get_network_output(net);

@@ -226,7 +226,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         save_image(im, "truth11");
         */
 
-        printf("Loaded: %lf seconds\n", (what_time_is_it_now() - time));
+        // printf("Loaded: %lf seconds\n", (what_time_is_it_now() - time));
 
         time = what_time_is_it_now();
         float loss = 0;
@@ -249,16 +249,16 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         calc_map_for_each = fmax(calc_map_for_each, net.burn_in);
         calc_map_for_each = fmax(calc_map_for_each, 1000);
         if (calc_map) {
-            printf("\n (next mAP calculation at %d iterations) ", calc_map_for_each);
-            if (mean_average_precision > 0) printf("\n Last accuracy mAP@0.5 = %2.2f %% ", mean_average_precision * 100);
+            printf("\n (mAP calc at %d iters) ", calc_map_for_each);
+            if (mean_average_precision > 0) printf("\n Last acc mAP@0.5 = %2.2f %% ", mean_average_precision * 100);
         }
 
         if (net.cudnn_half) {
-            if (i < net.burn_in * 3) fprintf(stderr, "\n Tensor Cores are disabled until the first %d iterations are reached.", 3 * net.burn_in);
-            else fprintf(stderr, "\n Tensor Cores are used.");
+            if (i < net.burn_in * 3) fprintf(stderr, "Tensor Cores are disabled until the first %d iterations are reached.\n ", 3 * net.burn_in);
+            else fprintf(stderr, "Tensor Cores are used.\n ");
         }
-        printf("\n %d / %d: %f, %f avg loss, %f delta, %f learning rate, %lf seconds, %d images\n", get_current_batch(net), net.max_batches, loss, avg_loss, get_network_delta_(net), get_current_rate(net), (what_time_is_it_now() - time), i*imgs);
-
+        printf(" - %d / %d: %f, %f avg loss, %f learning rate, %lf seconds, %d images\n", get_current_batch(net), net.max_batches, loss, avg_loss, get_current_rate(net), (what_time_is_it_now() - time), i*imgs);
+		
         int draw_precision = 0;
         if (calc_map && (i >= calc_map_for_each || i == net.max_batches)) {
             if (l.random) {

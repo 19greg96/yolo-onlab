@@ -1,6 +1,6 @@
 classes= 6
-train  = train_onlab.txt
-valid  = test_onlab.txt
+train  = data/train_onlab.txt
+valid  = data/test_onlab.txt
 names = data/onlab.names
 backup = backup
 

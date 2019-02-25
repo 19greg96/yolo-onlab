@@ -1,1 +1,4 @@
 *.zip
+*.tar
+*.bak
+data/*.*

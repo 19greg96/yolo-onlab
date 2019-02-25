@@ -49,6 +49,7 @@ $joinCategoryNames = array_keys($joinCategories);
 $categoryThreshold = 100;
 $displayNumExamples = 8;
 $onlyDisplayUsedCategories = true;
+$trainSplit = 0.9;
 
 $usedCategories = array('chair', 'table', 'cabinet/shelf', 'other', 'person');
 $onlabCategories = array('chair', 'table', 'cabinet/shelf', 'animal', 'person', 'other');
@@ -89,7 +90,6 @@ function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $j
 			
 			$categoryIdx = array_search($key, $onlabCategories);
 			if ($categoryIdx !== false) {
-				$objectClass = $categoryIdx + 1;
 				
 				$x0 = min($obj['x']) / $imageWidth;
 				$x1 = max($obj['x']) / $imageWidth;
@@ -114,28 +114,32 @@ function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $j
 				$width = ($x1 - $x0);
 				$height = ($y1 - $y0);
 				
-				if ($width <= 0) { return; }
-				if ($height <= 0) { return; }
+				if ($width <= 0) { return false; }
+				if ($height <= 0) { return false; }
 				//assert($width > 0, 'width underflow - ' . base64_encode($entityPath) . ' - ' . $entityPath);
 				//assert($height > 0, 'height underflow - ' . base64_encode($entityPath) . ' - ' . $entityPath);
 				
 				assert($xCenter > 0 && $xCenter <= 1, 'center x overflow - ' . base64_encode($entityPath) . ' - ' . $entityPath);
 				assert($yCenter > 0 && $yCenter <= 1, 'center y overflow - ' . base64_encode($entityPath) . ' - ' . $entityPath);
 				
-				$annotationLines .= $objectClass . ' ' . $xCenter . ' ' . $yCenter . ' ' . $width . ' ' . $height . "\n";
+				$annotationLines .= $categoryIdx . ' ' . $xCenter . ' ' . $yCenter . ' ' . $width . ' ' . $height . "\n";
 			}
 		}
 	}
 	file_put_contents($outputPath . 'img' . $i . '.txt', $annotationLines);
 	copy($imagePath, $outputPath . 'img' . $i . '.jpg');
 	// exit();
+	return true;
 }
 
 // Format data
 $objectCategories = array();
 $trainFileNames = '';
+$testFileNames = '';
+$numTrainFiles = round(count($dataEntityPaths) * $trainSplit);
 mkdir($outputPath);
 mkdir($outputPath . 'obj/');
+shuffle($dataEntityPaths);
 for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 	$entityPath = $dataEntityPaths[$i] . "\\";
 	$imagePath = $entityPath . "image\\";
@@ -144,8 +148,15 @@ for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 	if (getFileFromDir($annotationPath, 'json') === false) { continue; }
 	
 	$annotation = json_decode(file_get_contents(getFileFromDir($annotationPath, 'json')), true);
-	createYOLOAnnotationForEntity($i, $entityPath, $imagePath, $annotation, $joinCategories, $onlabCategories, $outputPath . 'obj/');
-	$trainFileNames .= $outputPath . 'obj/img' . $i . ".jpg\n";
+	$fileCreateOK = createYOLOAnnotationForEntity($i, $entityPath, $imagePath, $annotation, $joinCategories, $onlabCategories, $outputPath . 'obj/');
+	if (!$fileCreateOK) {
+		continue;
+	}
+	if ($i < $numTrainFiles) {
+		$trainFileNames .= $outputPath . 'obj/img' . $i . ".jpg\n";
+	} else {
+		$testFileNames .= $outputPath . 'obj/img' . $i . ".jpg\n";
+	}
 	
 	if (isset($annotation['frames'][0]['polygon'])) {
 		$objects = $annotation['frames'][0]['polygon'];
@@ -165,7 +176,8 @@ for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 		}
 	}
 }
-file_put_contents($outputPath . 'train.txt', $trainFileNames);
+file_put_contents($outputPath . 'train_onlab.txt', $trainFileNames);
+file_put_contents($outputPath . 'test_onlab.txt', $testFileNames);
 
 // Display example images
 arsort($objectCategories);

@@ -46,6 +46,8 @@ $joinCategories['table'] = array('table', 'side_table', 'desk', 'coffee_table', 
 $joinCategories['cabinet/shelf'] = array('shelf', 'cabinet', 'bookshelf', 'night_stand', 'nightstand:truncated', 'drawer', 'dresser', 'dresser:truncated', 'dresser:occluded', 'kitchen_cabinet', 'file_cabinet', 'fridge', 'frige', 'mini_refrigerator', 'cubby', 'cupboard', 'nightstand:occluded', 'locker', 'magazine_rack', 'chest', 'bookstand', 'closet', 'hanging_cabinet', 'hangingcabinet', 'steelcabinet', 'lockers', 'drawers', 'mini_shelf', 'mini_drawers'); // bookahelf
 $joinCategories['other'] = array('door', 'bed', 'box', 'monitor', 'garbage_bin', 'recycle_bin', 'computer', 'cpu', 'tv', 'toilet', 'printer', 'laptop', 'microwave', 'stove', 'bathtub', 'bed:truncated', 'tv_stand', 'plant');
 $joinCategoryNames = array_keys($joinCategories);
+$allUnknownIsOther = true; // when true, every object with unknown category is assigned other. When false, these entries are discarded.
+
 $categoryThreshold = 100;
 $displayNumExamples = 8;
 $onlyDisplayUsedCategories = true;
@@ -53,9 +55,9 @@ $trainSplit = 0.9;
 
 $usedCategories = array('chair', 'table', 'cabinet/shelf', 'other', 'person');
 $onlabCategories = array('chair', 'table', 'cabinet/shelf', 'animal', 'person', 'other');
-$outputPath = 'data/';
+$outputPath = 'SUNRGBD_data/';
 
-function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $joinCategories, $onlabCategories, $outputPath) {
+function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $joinCategories, $onlabCategories, $outputPath, $allUnknownIsOther) {
 	$joinCategoryNames = array_keys($joinCategories);
 	$imagePath = false;
 	if (file_exists($entityPath . 'fullres/')) {
@@ -89,6 +91,9 @@ function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $j
 			//print_r($obj);
 			
 			$categoryIdx = array_search($key, $onlabCategories);
+			if ($categoryIdx === false && $allUnknownIsOther) {
+				$categoryIdx = array_search('other', $onlabCategories);
+			}
 			if ($categoryIdx !== false) {
 				
 				$x0 = min($obj['x']) / $imageWidth;
@@ -148,7 +153,7 @@ for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 	if (getFileFromDir($annotationPath, 'json') === false) { continue; }
 	
 	$annotation = json_decode(file_get_contents(getFileFromDir($annotationPath, 'json')), true);
-	$fileCreateOK = createYOLOAnnotationForEntity($i, $entityPath, $imagePath, $annotation, $joinCategories, $onlabCategories, $outputPath . 'obj/');
+	$fileCreateOK = createYOLOAnnotationForEntity($i, $entityPath, $imagePath, $annotation, $joinCategories, $onlabCategories, $outputPath . 'obj/', $allUnknownIsOther);
 	if (!$fileCreateOK) {
 		continue;
 	}
@@ -200,48 +205,49 @@ foreach ($objectCategories as $catName => $category) {
 /*
 
 Categories used from VOC:
-8 - cat				-> animal
-9 - chair			-> chair
-10 - cow			-> animal
-11 - diningtable	-> table
-12 - dog			-> animal
-13 - horse			-> animal
-15 - person			-> person
-16 - pottedplant	-> other
-17 - sheep			-> animal
-18 - sofa			-> chair
-20 - tvmonitor		-> other
+7 - cat				-> animal
+8 - chair			-> chair
+9 - cow			-> animal
+10 - diningtable	-> table
+11 - dog			-> animal
+12 - horse			-> animal
+14 - person			-> person
+15 - pottedplant	-> other
+16 - sheep			-> animal
+17 - sofa			-> chair
+19 - tvmonitor		-> other
 
 VOC categories:
-1 - aeroplane
-2 - bicycle
-3 - bird
-4 - boat
-5 - bottle
-6 - bus
-7 - car
-8 - cat
-9 - chair
-10 - cow
-11 - diningtable
-12 - dog
-13 - horse
-14 - motorbike
-15 - person
-16 - pottedplant
-17 - sheep
-18 - sofa
-19 - train
-20 - tvmonitor
+0 - aeroplane
+1 - bicycle
+2 - bird
+3 - boat
+4 - bottle
+5 - bus
+6 - car
+7 - cat
+8 - chair
+9 - cow
+10 - diningtable
+11 - dog
+12 - horse
+13 - motorbike
+14 - person
+15 - pottedplant
+16 - sheep
+17 - sofa
+18 - train
+19 - tvmonitor
 
 
 Onlab categories:
-1 - Chair
-2 - Table
-3 - Cabinet/Shelf
-4 - Animal
-5 - Person
-6 - Other
+0 - Chair
+1 - Table
+2 - Cabinet/Shelf
+3 - Animal
+4 - Person
+5 - Other
+
 
 
 

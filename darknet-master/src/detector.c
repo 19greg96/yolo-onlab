@@ -168,7 +168,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     //while(i*imgs < N*120){
     while (get_current_batch(net) < net.max_batches) {
         if (l.random && count++ % 10 == 0) {
-            printf("Resizing\n");
+            printf("Resizing: ");
             //int dim = (rand() % 12 + (init_w/32 - 5)) * 32;    // +-160
             //int dim = (rand() % 4 + 16) * 32;
             //if (get_current_batch(net)+100 > net.max_batches) dim = 544;
@@ -248,16 +248,21 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         int calc_map_for_each = iter_map + 4 * train_images_num / (net.batch * net.subdivisions);  // calculate mAP for each 4 Epochs
         calc_map_for_each = fmax(calc_map_for_each, net.burn_in);
         calc_map_for_each = fmax(calc_map_for_each, 1000);
+		// Google Colab crashes the browser if too many lines are printed, so we only save every 10th line, and discard the rest.
+		if (i % 10 == 0) {
+			printf("\n");
+		} else {
+			printf("\r");
+		}
         if (calc_map) {
-            printf("\n (mAP calc at %d iters) ", calc_map_for_each);
-            if (mean_average_precision > 0) printf("\n Last acc mAP@0.5 = %2.2f %% ", mean_average_precision * 100);
+            printf("(mAP calc at %d iters. Last acc mAP@0.5 = %2.2f %%)", calc_map_for_each, mean_average_precision * 100);
         }
 
         if (net.cudnn_half) {
             if (i < net.burn_in * 3) fprintf(stderr, "Tensor Cores are disabled until the first %d iterations are reached.\n ", 3 * net.burn_in);
             else fprintf(stderr, "Tensor Cores are used.\n ");
         }
-        printf(" - %d / %d: %f, %f avg loss, %f learning rate, %lf seconds, %d images\n", get_current_batch(net), net.max_batches, loss, avg_loss, get_current_rate(net), (what_time_is_it_now() - time), i*imgs);
+        printf(" - %d / %d: %f, %f avg loss, %f learning rate, %lf seconds, %d images", i, net.max_batches, loss, avg_loss, get_current_rate(net), (what_time_is_it_now() - time), i*imgs);
 		
         int draw_precision = 0;
         if (calc_map && (i >= calc_map_for_each || i == net.max_batches)) {

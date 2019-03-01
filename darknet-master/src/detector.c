@@ -168,7 +168,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     //while(i*imgs < N*120){
     while (get_current_batch(net) < net.max_batches) {
         if (l.random && count++ % 10 == 0) {
-            printf("Resizing: ");
+            printf("\nResizing: ");
             //int dim = (rand() % 12 + (init_w/32 - 5)) * 32;    // +-160
             //int dim = (rand() % 4 + 16) * 32;
             //if (get_current_batch(net)+100 > net.max_batches) dim = 544;
@@ -248,12 +248,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         int calc_map_for_each = iter_map + 4 * train_images_num / (net.batch * net.subdivisions);  // calculate mAP for each 4 Epochs
         calc_map_for_each = fmax(calc_map_for_each, net.burn_in);
         calc_map_for_each = fmax(calc_map_for_each, 1000);
-		// Google Colab crashes the browser if too many lines are printed, so we only save every 10th line, and discard the rest.
-		if (i % 10 == 0) {
-			printf("\n");
-		} else {
-			printf("\r");
-		}
+		printf("\n");
         if (calc_map) {
             printf("(mAP calc at %d iters. Last acc mAP@0.5 = %2.2f %%)", calc_map_for_each, mean_average_precision * 100);
         }

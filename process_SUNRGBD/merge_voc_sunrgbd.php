@@ -62,6 +62,7 @@ $outputPath = "data/";
 mkdir($outputPath);
 mkdir($outputPath . 'obj/');
 
+$allObjectsIsOther = true; // when true, categories are ignored and all objects are grouped as one category
 $addOtherCategory = true; // when false, ignores all objects with label "Other"
 $VOC_to_ONLAB_categories = array();
 $VOC_to_ONLAB_categories[0] = 5; // 0 - aeroplane		=>		5 - other
@@ -111,6 +112,9 @@ for ($i = 0; $i < $numData; $i ++) {
 	if (file_exists($imagePath)) {
 		$imageBasePath = explode(".", $imagePath);
 		$imageBasePath = $imageBasePath[0];
+		
+		
+		// start replace VOC labels
 		$imageLabels = explode("\n", file_get_contents($imageBasePath . ".txt"));
 		$newLabels = "";
 		foreach ($imageLabels as $objTxt) {
@@ -123,9 +127,16 @@ for ($i = 0; $i < $numData; $i ++) {
 			if ($newCategoryIdx == 5 && !$addOtherCategory) { // new category would be other, but we don't want to add those
 				continue;
 			}
+			if ($allObjectsIsOther) {
+				$newCategoryIdx = 0;
+			}
 			$newLabels .= $newCategoryIdx . ' ' . implode(' ', $obj) . "\n";
 		}
 		file_put_contents($outputPath . 'obj/voc_' . $imageBaseName . '.txt', $newLabels);
+		// end
+		
+		
+		
 		copy($imagePath, $outputPath . 'obj/voc_' . $imageBaseName . '.jpg');
 		
 		if ($i < $numTrainFiles) {
@@ -169,13 +180,32 @@ for ($i = 0; $i < $numData; $i ++) {
 		$imageBasePath = explode(".", $imagePath);
 		$imageBasePath = $imageBasePath[0];
 		
+		// Start SUNRGBD replace labels
+		$imageLabels = explode("\n", file_get_contents($imageBasePath . ".txt"));
+		$newLabels = "";
+		foreach ($imageLabels as $objTxt) {
+			if (!strlen($objTxt)) {
+				continue;
+			}
+			$obj = explode(" ", $objTxt);
+			$oldCategoryIdx = intval(array_shift($obj)); // category Idx is first column, remove it from obj, because we will be adding new cat idx.
+			if ($allObjectsIsOther) {
+				$newCategoryIdx = 0;
+			} else {
+				$newCategoryIdx = $oldCategoryIdx;
+			}
+			$newLabels .= $newCategoryIdx . ' ' . implode(' ', $obj) . "\n";
+		}
+		// end
+		
+		file_put_contents($outputPath . 'obj/SUNRGBD_' . $imageBaseName . '.txt', $newLabels);
+		copy($imagePath, $outputPath . 'obj/SUNRGBD_' . $imageBaseName . '.jpg');
+		
 		if ($i < $numTrainFiles) {
 			$trainFileNames[] = $outputPath . 'obj/SUNRGBD_' . $imageBaseName . ".jpg";
 		} else {
 			$testFileNames[] = $outputPath . 'obj/SUNRGBD_' . $imageBaseName . ".jpg";
 		}
-		copy($imageBasePath . ".txt", $outputPath . 'obj/SUNRGBD_' . $imageBaseName . '.txt');
-		copy($imagePath, $outputPath . 'obj/SUNRGBD_' . $imageBaseName . '.jpg');
 	} else {
 		echo "Not found: " . $imagePath . "<br/>";
 	}

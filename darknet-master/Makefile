@@ -2,8 +2,8 @@
 CUDNN=0
 CUDNN_HALF=0
 #OPENCV=1
-AVX=0
-OPENMP=1
+#AVX=0
+#OPENMP=1
 #LIBSO=0
 
 # set GPU=1 and CUDNN=1 to speedup on GPU

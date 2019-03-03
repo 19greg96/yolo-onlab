@@ -250,7 +250,13 @@ def detect_image(net, meta, im, thresh=.5, hier_thresh=.5, nms=.45, debug= False
     if debug: print("Assigned num")
     pnum = pointer(num)
     if debug: print("Assigned pnum")
+    
+    import time
+    startTime = time.perf_counter()
     predict_image(net, im)
+    predictTime = time.perf_counter() - startTime
+    print("Predict time", predictTime)
+    
     if debug: print("did prediction")
     #dets = get_network_boxes(net, custom_image_bgr.shape[1], custom_image_bgr.shape[0], thresh, hier_thresh, None, 0, pnum, 0) # OpenCV
     dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, None, 0, pnum, 0)

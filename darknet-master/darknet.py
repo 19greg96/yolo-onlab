@@ -233,6 +233,7 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45, debug= False):
     #pylint: disable= C0321
     im = load_image(image, 0, 0)
     if debug: print("Loaded image")
+    print("call detect_image")
     ret = detect_image(net, meta, im, thresh, hier_thresh, nms, debug)
     free_image(im)
     if debug: print("freed image")
@@ -385,6 +386,7 @@ def performDetect(imagePath="data/dog.jpg", thresh= 0.25, configPath = "./cfg/yo
         raise ValueError("Invalid image path `"+os.path.abspath(imagePath)+"`")
     # Do the detection
     #detections = detect(netMain, metaMain, imagePath, thresh)	# if is used cv2.imread(image)
+    print("Call detect")
     detections = detect(netMain, metaMain, imagePath.encode("ascii"), thresh)
     if showImage:
         try:

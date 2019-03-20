@@ -1,0 +1,8 @@
+416x416
+COLAB: GPU: 30ms, CPU: 830ms, CPU(AVX): 350ms
+COLAB: OpenCL: 190ms
+Audi: OpenCL: 2400ms, CPU(AVX): 180ms
+
+288x288
+COLAB: CPU(AVX): 160ms
+

@@ -53,12 +53,23 @@ void forward_network_gpu(network net, network_state state)
     //printf("\n");
     state.workspace = net.workspace;
     int i;
+
+
+    // double start_time = get_time_point();
+    // double time;
+    
     for(i = 0; i < net.n; ++i){
+        // time = get_time_point();
+
         state.index = i;
         layer l = net.layers[i];
         if(l.delta_gpu && state.train){
             fill_ongpu(l.outputs * l.batch, 0, l.delta_gpu, 1);
         }
+
+        // printf("Layer fill time %d in %lf milli-seconds.\n", i, ((double)get_time_point() - time) / 1000);
+        // time = get_time_point();
+
         //printf("\n layer %d - type: %d - \n", i, l.type);
         //start_timer();
         l.forward_gpu(l, state);
@@ -68,6 +79,8 @@ void forward_network_gpu(network net, network_state state)
         if(net.wait_stream)
             cudaStreamSynchronize(get_cuda_stream());
         state.input = l.output_gpu;
+
+        // printf("Layer forward %d in %lf milli-seconds.\n", i, ((double)get_time_point() - time) / 1000);
         //cudaDeviceSynchronize();
 /*
         cuda_pull_array(l.output_gpu, l.output, l.batch*l.outputs);
@@ -88,6 +101,7 @@ void forward_network_gpu(network net, network_state state)
         }
 */
     }
+    // printf("All layers in %lf milli-seconds.\n", ((double)get_time_point() - start_time) / 1000);
     //cudaStreamSynchronize(get_cuda_stream());   // sync CUDA-functions
     //cudaDeviceSynchronize();
     //show_total_time();
@@ -454,7 +468,11 @@ float *network_predict_gpu(network net, float *input)
     state.truth = 0;
     state.train = 0;
     state.delta = 0;
+
+    // double time = get_time_point();
     forward_network_gpu(net, state);
+    // printf("Forward in %lf milli-seconds.\n", ((double)get_time_point() - time) / 1000);
+
     float *out = get_network_output_gpu(net);
     //cuda_free(state.input);   // will be freed in the free_network()
     return out;

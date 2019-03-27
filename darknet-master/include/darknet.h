@@ -704,8 +704,12 @@ typedef struct load_args {
     float saturation;
     float exposure;
     float hue;
-    data *d;
-    image *im;
+#ifdef __cplusplus
+	::data *d;
+#else
+	data *d;
+#endif
+	image *im;
     image *resized;
     data_type type;
     tree *hierarchy;
@@ -782,7 +786,11 @@ LIB_API void free_image(image m);
 LIB_API void free_layer(layer);
 
 // data.c
+#ifdef __cplusplus
+LIB_API void free_data(::data d);
+#else
 LIB_API void free_data(data d);
+#endif
 LIB_API pthread_t load_data(load_args args);
 LIB_API pthread_t load_data_in_thread(load_args args);
 

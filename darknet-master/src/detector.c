@@ -1278,8 +1278,13 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         }
         //image im;
         //image sized = load_image_resize(input, net.w, net.h, net.c, &im);
+        double time = get_time_point();
+
         image im = load_image(input, 0, 0, net.c);
         image sized = resize_image(im, net.w, net.h);
+
+        printf("%s: Resized in %lf milli-seconds.\n", input, ((double)get_time_point() - time) / 1000);
+
         int letterbox = 0;
         //image sized = letterbox_image(im, net.w, net.h); letterbox = 1;
         layer l = net.layers[net.n - 1];
@@ -1291,7 +1296,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         float *X = sized.data;
 
         //time= what_time_is_it_now();
-        double time = get_time_point();
+        time = get_time_point();
         network_predict(net, X);
         //network_predict_image(&net, im); letterbox = 1;
         printf("%s: Predicted in %lf milli-seconds.\n", input, ((double)get_time_point() - time) / 1000);

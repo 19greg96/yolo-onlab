@@ -480,7 +480,7 @@ int main(int argc, char **argv)
 	} else if (0 == strcmp(argv[1], "test_img_noise")) {
 		float noise = find_float_arg(argc, argv, "-noise", .24);
 		char tmp[20];
-		for (int i = 0; i < 20; i ++) {
+		for (i = 0; i < 20; i ++) {
 			image orig = load_image("test_image.jpg", 0, 0, 0);
 			noise = rand_normal() * noise;
 			printf("noise: %.5f\n", noise);

@@ -797,7 +797,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, dhue, dsat, dexp);
 		random_noise_image(ai, noise);
 		
-		save_image_png(orig, "noisy_image"); // for testing
+		save_image_png(ai, "noisy_image"); // for testing
 		
         d.X.vals[i] = ai.data;
 

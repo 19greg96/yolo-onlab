@@ -479,11 +479,15 @@ int main(int argc, char **argv)
         test_detector("cfg/coco.data", argv[2], argv[3], filename, thresh, 0.5, 0, 1, 0, NULL);
 	} else if (0 == strcmp(argv[1], "test_img_noise")) {
 		float noise = find_float_arg(argc, argv, "-noise", .24);
-		image orig = load_image("test_image.jpg", 0, 0, 0);
-		noise = rand_normal() * noise;
-		printf("noise: %.5f\n", noise);
-		random_noise_image(orig, noise);
-		save_image_png(orig, "noisy_image");
+		char tmp[20];
+		for (int i = 0; i < 20; i ++) {
+			image orig = load_image("test_image.jpg", 0, 0, 0);
+			noise = rand_normal() * noise;
+			printf("noise: %.5f\n", noise);
+			random_noise_image(orig, noise);
+			sprintf(tmp, "noisy_image_%d", i);
+			save_image_png(orig, tmp);
+		}
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);
     } else if (0 == strcmp(argv[1], "go")){

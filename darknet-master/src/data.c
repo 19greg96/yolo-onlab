@@ -795,9 +795,10 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         float dexp = rand_scale(exposure);
 
         image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, dhue, dsat, dexp);
-		random_noise_image(ai, noise);
-		
-		save_image_png(ai, "noisy_image"); // for testing
+		if (noise > 0.000001) {
+			random_noise_image(ai, noise);
+		}
+		// save_image_png(ai, "noisy_image"); // for testing
 		
         d.X.vals[i] = ai.data;
 
@@ -854,9 +855,10 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         image sized = resize_image(cropped, w, h);
         if (flip) flip_image(sized);
         random_distort_image(sized, hue, saturation, exposure);
-		random_noise_image(sized, noise);
-		
-		save_image_png(orig, "noisy_image"); // for testing
+		if (noise > 0.000001) {
+			random_noise_image(sized, noise);
+		}
+		// save_image_png(orig, "noisy_image"); // for testing
 		
         d.X.vals[i] = sized.data;
 

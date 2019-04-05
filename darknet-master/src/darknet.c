@@ -477,6 +477,11 @@ int main(int argc, char **argv)
 		int ext_output = find_arg(argc, argv, "-ext_output");
         char *filename = (argc > 4) ? argv[4]: 0;
         test_detector("cfg/coco.data", argv[2], argv[3], filename, thresh, 0.5, 0, 1, 0, NULL);
+	} else if (0 == strcmp(argv[1], "test_img_noise")) {
+		float noise = find_float_arg(argc, argv, "-noise", .24);
+		image orig = load_image("test_image.jpg", 0, 0, 0);
+		random_noise_image(orig, noise);
+		save_image_png(orig, "noisy_image");
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);
     } else if (0 == strcmp(argv[1], "go")){

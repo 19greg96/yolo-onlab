@@ -480,6 +480,7 @@ int main(int argc, char **argv)
 	} else if (0 == strcmp(argv[1], "test_img_noise")) {
 		float noise = find_float_arg(argc, argv, "-noise", .24);
 		image orig = load_image("test_image.jpg", 0, 0, 0);
+		noise = rand_uniform_strong(0, noise);
 		random_noise_image(orig, noise);
 		save_image_png(orig, "noisy_image");
     } else if (0 == strcmp(argv[1], "cifar")){

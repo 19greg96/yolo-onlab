@@ -31,6 +31,8 @@ from ctypes import *
 import math
 import random
 import os
+import time
+
 
 def sample(probs):
     s = sum(probs)
@@ -80,8 +82,8 @@ hasGPU = True
 if os.name == "nt":
     cwd = os.path.dirname(__file__)
     os.environ['PATH'] = cwd + ';' + os.environ['PATH']
-    winGPUdll = os.path.join(cwd, "yolo_cpp_dll.dll")
-    winNoGPUdll = os.path.join(cwd, "yolo_cpp_dll_nogpu.dll")
+    winGPUdll = os.path.join(cwd, "darknet.dll")
+    winNoGPUdll = os.path.join(cwd, "darknet_no_gpu.dll")
     envKeys = list()
     for k, v in os.environ.items():
         envKeys.append(k)
@@ -251,11 +253,11 @@ def detect_image(net, meta, im, thresh=.5, hier_thresh=.5, nms=.45, debug= False
     pnum = pointer(num)
     if debug: print("Assigned pnum")
     
-    import time
-    startTime = time.perf_counter()
+    #import time
+    #startTime = time.perf_counter()
     predict_image(net, im)
-    predictTime = time.perf_counter() - startTime
-    print("Predict time", predictTime * 1000, "[ms]")
+    #predictTime = time.perf_counter() - startTime
+    #print("Predict time", predictTime * 1000, "[ms]")
     
     if debug: print("did prediction")
     #dets = get_network_boxes(net, custom_image_bgr.shape[1], custom_image_bgr.shape[0], thresh, hier_thresh, None, 0, pnum, 0) # OpenCV
@@ -297,7 +299,7 @@ netMain = None
 metaMain = None
 altNames = None
 
-def performDetect(imagePath="data/dog.jpg", thresh= 0.25, configPath = "./cfg/yolov3.cfg", weightPath = "yolov3.weights", metaPath= "./cfg/coco.data", showImage= True, makeImageOnly = False, initOnly= False):
+def performDetect(imagePath="test_office2.jpg", thresh=0.25, configPath = "./cfg/yolo3-tiny-onlab_nocat_test.cfg", weightPath = "./backup/yolo3-tiny-onlab_nocat_8000.weights", metaPath= "./cfg/onlab_nocat.data", showImage= True, makeImageOnly = False, initOnly= False):
     """
     Convenience function to handle the detection and returns of objects.
 
@@ -441,4 +443,27 @@ def performDetect(imagePath="data/dog.jpg", thresh= 0.25, configPath = "./cfg/yo
     return detections
 
 if __name__ == "__main__":
-    print(performDetect())
+  weights = "backup/yolo3-tiny-onlab_nocat_8000.weights"
+  config = "cfg/yolo3-tiny-onlab_nocat_test.cfg"
+  data_cfg = "cfg/onlab_nocat.data"
+  image = "test_office2.jpg"
+  
+  startTime = time.perf_counter()
+  performDetect(imagePath=image, thresh=0.1, configPath = config, weightPath = weights, metaPath= data_cfg, showImage= False, makeImageOnly = False, initOnly= True)
+  initTime = time.perf_counter() - startTime
+  
+  nImage = 1000
+  startTime = time.perf_counter()
+  for x in range(0, nImage):
+    detections = performDetect(imagePath=image, thresh=0.1, configPath = config, weightPath = weights, metaPath= data_cfg, showImage= False, makeImageOnly = False, initOnly= False)
+  detectTime = time.perf_counter() - startTime
+  
+  print("Init time", initTime*1000, "[ms] Detect time", detectTime * 1000 / nImage, "[ms/image]")
+
+
+
+
+
+
+
+

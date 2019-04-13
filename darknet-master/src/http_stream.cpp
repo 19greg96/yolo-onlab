@@ -542,12 +542,12 @@ extern "C" {
 
 image image_data_augmentation(IplImage* ipl, int w, int h,
     int pleft, int ptop, int swidth, int sheight, int flip,
-    float jitter, float dhue, float dsat, float dexp)
+    float jitter, float noise, float dhue, float dsat, float dexp)
 {
     image out;
     try {
         cv::Mat img = cv::cvarrToMat(ipl);
-
+		
         // crop
         cv::Rect src_rect(pleft, ptop, swidth, sheight);
         cv::Rect img_rect(cv::Point2i(0, 0), img.size());
@@ -592,6 +592,16 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
         {
             sized *= dexp;
         }
+		
+		// noise
+		if (noise > 0.000001) {
+			cv::Mat noise(src.size(),src.type());
+			cv::Mat mean = cv::Mat::zeros(1, 1, CV_64FC1);
+			cv::Mat stddev = cv::Mat::ones(1, 1, CV_64FC1);
+			stddev *= noise;
+			cv::randn(noise, mean, stddev);
+			sized += noise;
+		}
 
         //std::stringstream window_name;
         //window_name << "augmentation - " << ipl;

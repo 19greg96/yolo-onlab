@@ -794,11 +794,11 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         float dsat = rand_scale(saturation);
         float dexp = rand_scale(exposure);
 
-        image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, dhue, dsat, dexp);
-		if (noise > 0.000001) {
-			random_noise_image(ai, noise);
-		}
-		// save_image_png(ai, "noisy_image"); // for testing
+        image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, noise, dhue, dsat, dexp);
+		// if (noise > 0.000001) {
+			// random_noise_image(ai, noise);
+		// }
+		save_image_png(ai, "noisy_image"); // for testing
 		
         d.X.vals[i] = ai.data;
 
@@ -812,7 +812,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
     free(random_paths);
     return d;
 }
-#else    // OPENCV
+#else    // no OPENCV
 data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float hue, float saturation, float exposure, int small_object)
 {
     c = c ? c : 3;

@@ -594,6 +594,7 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
         }
 		
 		// noise
+		printf("enter noise generation %.2f\n", noise);
 		if (noise > 0.000001) {
 			cv::Mat noiseMat(sized.size(), sized.type());
 			cv::Mat mean = cv::Mat::zeros(1, 1, CV_64FC1);
@@ -601,6 +602,11 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
 			stddev *= noise;
 			cv::randn(noiseMat, mean, stddev);
 			sized += noiseMat;
+			
+			IplImage src = sized;
+			//save_image_png(ipl_to_image(&src), "noisy_image"); // for testing
+			cv::imwrite("noisy_image.png", src);
+			printf("noise %.2f\n", noise);
 		}
 
         //std::stringstream window_name;

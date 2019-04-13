@@ -798,7 +798,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 		// if (noise > 0.000001) {
 			// random_noise_image(ai, noise);
 		// }
-		save_image_png(ai, "noisy_image"); // for testing
+		// save_image_png(ai, "noisy_image"); // for testing
 		
         d.X.vals[i] = ai.data;
 

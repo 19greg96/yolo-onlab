@@ -599,12 +599,13 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
 			cv::Mat noiseMat(sized.size(), sized.type());
 			cv::Mat mean = cv::Mat::zeros(1, 1, CV_64FC1);
 			cv::Mat stddev = cv::Mat::ones(1, 1, CV_64FC1);
-			stddev *= noise;
+			stddev *= noise * 255;
 			cv::randn(noiseMat, mean, stddev);
 			sized += noiseMat;
 			
 			//save_image_png(ipl_to_image(&src), "noisy_image"); // for testing
-			cv::imwrite("noisy_image.png", sized);
+			cv::cvtColor(sized, sized, cv::COLOR_BGR2RGB);
+			cv::imwrite("noisy_image.png", );
 			printf("noise %.2f\n", noise);
 		}
 

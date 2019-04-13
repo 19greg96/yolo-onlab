@@ -595,7 +595,7 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
 		
 		// noise
 		if (noise > 0.000001) {
-			cv::Mat noise(src.size(),src.type());
+			cv::Mat noise(sized.size(), sized.type());
 			cv::Mat mean = cv::Mat::zeros(1, 1, CV_64FC1);
 			cv::Mat stddev = cv::Mat::ones(1, 1, CV_64FC1);
 			stddev *= noise;

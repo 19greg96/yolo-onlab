@@ -603,7 +603,7 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
 			cv::randn(noiseMat, mean, stddev);
 			sized += noiseMat;
 			
-			cv::normalize(sized, sized, 255, 0, NORM_MINMAX);
+			cv::normalize(sized, sized, 0, 255, NORM_MINMAX);
 			//save_image_png(ipl_to_image(&src), "noisy_image"); // for testing
 			cv::cvtColor(sized, sized, cv::COLOR_BGR2RGB);
 			cv::imwrite("noisy_image.png", sized);

@@ -605,7 +605,7 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
 			
 			//save_image_png(ipl_to_image(&src), "noisy_image"); // for testing
 			cv::cvtColor(sized, sized, cv::COLOR_BGR2RGB);
-			cv::imwrite("noisy_image.png", );
+			cv::imwrite("noisy_image.png", sized);
 			printf("noise %.2f\n", noise);
 		}
 

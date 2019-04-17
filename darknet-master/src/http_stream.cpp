@@ -594,6 +594,7 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
         }
 		
 		// noise
+		/*
 		printf("enter noise generation %.2f\n", noise);
 		if (noise > 0.000001) {
 			cv::Mat noiseMat(sized.size(), sized.type());
@@ -608,6 +609,7 @@ image image_data_augmentation(IplImage* ipl, int w, int h,
 			cv::imwrite("noisy_image.png", sized);
 			printf("noise %.2f\n", noise);
 		}
+		*/
 
         //std::stringstream window_name;
         //window_name << "augmentation - " << ipl;

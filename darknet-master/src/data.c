@@ -186,7 +186,7 @@ void randomize_boxes(box_label *b, int n)
     }
 }
 
-void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float sy, int flip)
+void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float sy, float angle, int flip)
 {
     int i;
     for(i = 0; i < n; ++i){
@@ -217,6 +217,20 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
         boxes[i].y = (boxes[i].top+boxes[i].bottom)/2;
         boxes[i].w = (boxes[i].right - boxes[i].left);
         boxes[i].h = (boxes[i].bottom - boxes[i].top);
+		
+		
+		// rotate box
+		float newBoxCenterX = cos(angle)*(boxes[i].x-0.5f) - sin(angle)*(boxes[i].y-0.5f) + 0.5f;
+		float newBoxCenterY = sin(angle)*(boxes[i].x-0.5f) + cos(angle)*(boxes[i].y-0.5f) + 0.5f;
+		
+		float newBoxW = cos(angle)*(boxes[i].w-0.5f) - sin(angle)*(boxes[i].h-0.5f) + 0.5f;
+		float newBoxH = sin(angle)*(boxes[i].w-0.5f) + cos(angle)*(boxes[i].h-0.5f) + 0.5f;
+		
+		boxes[i].x = newBoxCenterX;
+        boxes[i].y = newBoxCenterY;
+        boxes[i].w = newBoxW;
+        boxes[i].h = newBoxH;
+		
 
         boxes[i].w = constrain(0, 1, boxes[i].w);
         boxes[i].h = constrain(0, 1, boxes[i].h);
@@ -231,7 +245,7 @@ void fill_truth_swag(char *path, float *truth, int classes, int flip, float dx, 
     int count = 0;
     box_label *boxes = read_boxes(labelpath, &count);
     randomize_boxes(boxes, count);
-    correct_boxes(boxes, count, dx, dy, sx, sy, flip);
+    correct_boxes(boxes, count, dx, dy, sx, sy, 0.0f, flip);
     float x,y,w,h;
     int id;
     int i;
@@ -265,7 +279,7 @@ void fill_truth_region(char *path, float *truth, int classes, int num_boxes, int
     int count = 0;
     box_label *boxes = read_boxes(labelpath, &count);
     randomize_boxes(boxes, count);
-    correct_boxes(boxes, count, dx, dy, sx, sy, flip);
+    correct_boxes(boxes, count, dx, dy, sx, sy, 0.0f, flip);
     float x,y,w,h;
     int id;
     int i;
@@ -300,7 +314,7 @@ void fill_truth_region(char *path, float *truth, int classes, int num_boxes, int
     free(boxes);
 }
 
-void fill_truth_detection(char *path, int num_boxes, float *truth, int classes, int flip, float dx, float dy, float sx, float sy,
+void fill_truth_detection(char *path, int num_boxes, float *truth, int classes, float angle, int flip, float dx, float dy, float sx, float sy,
     int small_object, int net_w, int net_h)
 {
     char labelpath[4096];
@@ -318,7 +332,7 @@ void fill_truth_detection(char *path, int num_boxes, float *truth, int classes, 
         }
     }
     randomize_boxes(boxes, count);
-    correct_boxes(boxes, count, dx, dy, sx, sy, flip);
+    correct_boxes(boxes, count, dx, dy, sx, sy, angle, flip);
     if (count > num_boxes) count = num_boxes;
     float x, y, w, h;
     int id;
@@ -379,6 +393,7 @@ void fill_truth_detection(char *path, int num_boxes, float *truth, int classes, 
             h = 1;
             if (check_mistakes) getchar();
         }
+		
         if (x == 0) x += lowest_w;
         if (y == 0) y += lowest_h;
 
@@ -739,7 +754,7 @@ data load_data_swag(char **paths, int n, int classes, float jitter)
 
 #include "http_stream.h"
 
-data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float hue, float saturation, float exposure, int small_object)
+data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float angle, float hue, float saturation, float exposure, int small_object)
 {
     c = c ? c : 3;
     char **random_paths = get_random_paths(paths, n, m);
@@ -795,6 +810,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         float dexp = rand_scale(exposure);
 
         image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, noise, dhue, dsat, dexp);
+		// CV noise generation implementation is started in image_data_augmentation(...); see http_stream.cpp
 		// if (noise > 0.000001) {
 			// random_noise_image(ai, noise);
 		// }
@@ -805,7 +821,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         //show_image(ai, "aug");
         //cvWaitKey(0);
 
-        fill_truth_detection(filename, boxes, d.y.vals[i], classes, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
+        fill_truth_detection(filename, boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
 
         cvReleaseImage(&src);
     }
@@ -813,7 +829,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
     return d;
 }
 #else    // no OPENCV
-data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float hue, float saturation, float exposure, int small_object)
+data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float angle, float hue, float saturation, float exposure, int small_object)
 {
     c = c ? c : 3;
     char **random_paths = get_random_paths(paths, n, m);
@@ -858,11 +874,14 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 		if (noise > 0.000001) {
 			random_noise_image(sized, noise);
 		}
+		if (angle > 0.001) {
+			sized = rotate_image(sized, angle);
+		}
 		// save_image_png(orig, "noisy_image"); // for testing
 		
         d.X.vals[i] = sized.data;
 
-        fill_truth_detection(random_paths[i], boxes, d.y.vals[i], classes, flip, dx, dy, 1. / sx, 1. / sy, small_object, w, h);
+        fill_truth_detection(random_paths[i], boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1. / sx, 1. / sy, small_object, w, h);
 
         free_image(orig);
         free_image(cropped);
@@ -893,7 +912,8 @@ void *load_thread(void *ptr)
         *a.d = load_data_region(a.n, a.paths, a.m, a.w, a.h, a.num_boxes, a.classes, a.jitter, a.hue, a.saturation, a.exposure);
     } else if (a.type == DETECTION_DATA){
 		float noise = rand_normal() * a.noise;
-        *a.d = load_data_detection(a.n, a.paths, a.m, a.w, a.h, a.c, a.num_boxes, a.classes, a.flip, a.jitter, noise, a.hue, a.saturation, a.exposure, a.small_object);
+		float angle = rand_normal() * a.angle;
+        *a.d = load_data_detection(a.n, a.paths, a.m, a.w, a.h, a.c, a.num_boxes, a.classes, a.flip, a.jitter, noise, angle, a.hue, a.saturation, a.exposure, a.small_object);
     } else if (a.type == SWAG_DATA){
         *a.d = load_data_swag(a.paths, a.n, a.classes, a.jitter);
     } else if (a.type == COMPARE_DATA){

@@ -1,0 +1,4 @@
+streamer -f jpeg -o image.jpeg -s 1920x1080
+
+
+streamer -f jpeg -o image.jpeg -s 1920x1080

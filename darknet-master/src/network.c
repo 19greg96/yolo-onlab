@@ -41,6 +41,7 @@ load_args get_base_args(network *net)
 
     args.min = net->min_crop;
     args.max = net->max_crop;
+	args.noise = net->noise;
     args.angle = net->angle;
     args.aspect = net->aspect;
     args.exposure = net->exposure;

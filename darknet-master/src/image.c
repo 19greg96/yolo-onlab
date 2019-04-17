@@ -394,7 +394,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
             //    copied_frame_id = frame_id;
             //    if (copy_img.data) free_image(copy_img);
             //    copy_img = copy_image(im);
-            //}
+            // }
             //image cropped_im = crop_image(copy_img, left, top, right - left, bot - top);
             //static int img_id = 0;
             //img_id++;
@@ -451,7 +451,7 @@ void draw_detections(image im, int num, float thresh, box *boxes, float **probs,
             // int k;
             //for (k = 0; k < classes; ++k) {
             //    printf("%f, ", probs[i][k]);
-            //}
+            // }
             //printf("\n");
 
             int width = im.h * .012;
@@ -546,7 +546,7 @@ void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float t
             //if(0){
             //width = pow(prob, 1./2.)*10+1;
             //alphabet = 0;
-            //}
+            // }
 
             //printf("%d %s: %.0f%%\n", i, names[class_id], prob*100);
             int offset = class_id * 123457 % classes;
@@ -607,7 +607,7 @@ void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float t
             //    copied_frame_id = frame_id;
             //    if(copy_img == NULL) copy_img = cvCreateImage(cvSize(show_img->width, show_img->height), show_img->depth, show_img->nChannels);
             //    cvCopy(show_img, copy_img, 0);
-            //}
+            // }
             //static int img_id = 0;
             //img_id++;
             //char image_name[1024];
@@ -1815,6 +1815,15 @@ void distort_image(image im, float hue, float sat, float val)
         scale_image_channel(im, 0, val);
     }
     constrain_image(im);
+}
+
+void random_noise_image(image im, float noise)
+{
+	int i;
+    for(i = 0; i < im.w*im.h*im.c; ++i) {
+		im.data[i] += rand_normal() * noise;
+    }
+	constrain_image(im);
 }
 
 void random_distort_image(image im, float hue, float saturation, float exposure)

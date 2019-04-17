@@ -739,7 +739,7 @@ data load_data_swag(char **paths, int n, int classes, float jitter)
 
 #include "http_stream.h"
 
-data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float hue, float saturation, float exposure, int small_object)
+data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float hue, float saturation, float exposure, int small_object)
 {
     c = c ? c : 3;
     char **random_paths = get_random_paths(paths, n, m);
@@ -794,7 +794,12 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         float dsat = rand_scale(saturation);
         float dexp = rand_scale(exposure);
 
-        image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, dhue, dsat, dexp);
+        image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, noise, dhue, dsat, dexp);
+		// if (noise > 0.000001) {
+			// random_noise_image(ai, noise);
+		// }
+		// save_image_png(ai, "noisy_image"); // for testing
+		
         d.X.vals[i] = ai.data;
 
         //show_image(ai, "aug");
@@ -807,8 +812,8 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
     free(random_paths);
     return d;
 }
-#else    // OPENCV
-data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float hue, float saturation, float exposure, int small_object)
+#else    // no OPENCV
+data load_data_detection(int n, char **paths, int m, int w, int h, int c, int boxes, int classes, int use_flip, float jitter, float noise, float hue, float saturation, float exposure, int small_object)
 {
     c = c ? c : 3;
     char **random_paths = get_random_paths(paths, n, m);
@@ -850,6 +855,11 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         image sized = resize_image(cropped, w, h);
         if (flip) flip_image(sized);
         random_distort_image(sized, hue, saturation, exposure);
+		if (noise > 0.000001) {
+			random_noise_image(sized, noise);
+		}
+		// save_image_png(orig, "noisy_image"); // for testing
+		
         d.X.vals[i] = sized.data;
 
         fill_truth_detection(random_paths[i], boxes, d.y.vals[i], classes, flip, dx, dy, 1. / sx, 1. / sy, small_object, w, h);
@@ -882,7 +892,8 @@ void *load_thread(void *ptr)
     } else if (a.type == REGION_DATA){
         *a.d = load_data_region(a.n, a.paths, a.m, a.w, a.h, a.num_boxes, a.classes, a.jitter, a.hue, a.saturation, a.exposure);
     } else if (a.type == DETECTION_DATA){
-        *a.d = load_data_detection(a.n, a.paths, a.m, a.w, a.h, a.c, a.num_boxes, a.classes, a.flip, a.jitter, a.hue, a.saturation, a.exposure, a.small_object);
+		float noise = rand_normal() * a.noise;
+        *a.d = load_data_detection(a.n, a.paths, a.m, a.w, a.h, a.c, a.num_boxes, a.classes, a.flip, a.jitter, noise, a.hue, a.saturation, a.exposure, a.small_object);
     } else if (a.type == SWAG_DATA){
         *a.d = load_data_swag(a.paths, a.n, a.classes, a.jitter);
     } else if (a.type == COMPARE_DATA){

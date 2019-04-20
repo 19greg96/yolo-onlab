@@ -811,9 +811,13 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 
         image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, noise, dhue, dsat, dexp);
 		// CV noise generation implementation is started in image_data_augmentation(...); see http_stream.cpp
-		// if (noise > 0.000001) {
-			// random_noise_image(ai, noise);
-		// }
+		// CV implementation is currently disabled
+		if (noise > 0.000001) {
+			random_noise_image(ai, noise);
+		}
+		if (angle > 0.001) {
+			sized = rotate_image(sized, angle);
+		}
 		// save_image_png(ai, "noisy_image"); // for testing
 		
         d.X.vals[i] = ai.data;
@@ -822,7 +826,30 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         //cvWaitKey(0);
 
         fill_truth_detection(filename, boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
+		
+		float x, y, w, h;
+		for (int j = 0; j < boxes; j ++) {
+			x = d.y.vals[i][j*5+0];
+			y = d.y.vals[i][j*5+1];
+			w = d.y.vals[i][j*5+2];
+			h = d.y.vals[i][j*5+3];
+			// d.y.vals[i][j*5+4] = id;
+			
+			int left  = (x-w/2.)*ai.w;
+			int right = (x+w/2.)*ai.w;
+			int top   = (y-h/2.)*ai.h;
+			int bot   = (y+h/2.)*ai.h;
 
+			if(left < 0) left = 0;
+			if(right > ai.w-1) right = ai.w-1;
+			if(top < 0) top = 0;
+			if(bot > ai.h-1) bot = ai.h-1;
+			
+			draw_box_width(ai, left, top, right, bot, 1, 1.0f, 0, 0);
+		}
+        save_image(ai, "test_image");
+		
+		
         cvReleaseImage(&src);
     }
     free(random_paths);

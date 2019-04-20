@@ -816,7 +816,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 			random_noise_image(ai, noise);
 		}
 		if (angle > 0.001) {
-			sized = rotate_image(sized, angle);
+			ai = rotate_image(ai, angle);
 		}
 		// save_image_png(ai, "noisy_image"); // for testing
 		

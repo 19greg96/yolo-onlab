@@ -796,11 +796,11 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
     d.X.rows = n;
     d.X.vals = calloc(d.X.rows, sizeof(float*));
     d.X.cols = h*w*c;
-
+	printf("Hello world!00\n");
     d.y = make_matrix(n, 5*boxes);
     for(i = 0; i < n; ++i){
         const char *filename = random_paths[i];
-
+		printf("Hello world!000\n");
         int flag = (c >= 3);
         IplImage *src;
         if ((src = cvLoadImage(filename, flag)) == 0)
@@ -839,13 +839,14 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         float dhue = rand_uniform_strong(-hue, hue);
         float dsat = rand_scale(saturation);
         float dexp = rand_scale(exposure);
-
+		printf("Hello world!000\n");
         image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, noise, dhue, dsat, dexp);
 		// CV noise generation implementation is started in image_data_augmentation(...); see http_stream.cpp
 		// CV implementation is currently disabled
 		if (noise > 0.000001) {
 			random_noise_image(ai, noise);
 		}
+		printf("Hello world!0-0\n");
 		if (angle > 0.001) {
 			ai = rotate_image(ai, angle);
 		}
@@ -855,7 +856,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 
         //show_image(ai, "aug");
         //cvWaitKey(0);
-
+		printf("Hello world!01\n");
         fill_truth_detection(filename, boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
 		printf("Hello world!1\n");
 		// debug save image

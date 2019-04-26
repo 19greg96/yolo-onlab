@@ -197,6 +197,7 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
             boxes[i].h = 999999;
             continue;
         }
+		
         boxes[i].left   = boxes[i].left  * sx - dx;
         boxes[i].right  = boxes[i].right * sx - dx;
         boxes[i].top    = boxes[i].top   * sy - dy;
@@ -219,7 +220,26 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
         boxes[i].h = (boxes[i].bottom - boxes[i].top);
 		
 		
+		
 		// rotate box
+		float newCenterX = (cos(angle)*(boxes[i].x - 0.5f) - sin(angle)*(boxes[i].y - 0.5f)) + 0.5f;
+		float newCenterY = -(sin(angle)*(boxes[i].x - 0.5f) + cos(angle)*(boxes[i].y - 0.5f)) + 0.5f;
+		
+		float newBoxW1 = (cos(angle)*boxes[i].w - sin(angle)*boxes[i].h); // top right
+		float newBoxH1 = (sin(angle)*boxes[i].w + cos(angle)*boxes[i].h);
+
+		float newBoxW2 = (cos(angle)*boxes[i].w - sin(angle)*(-boxes[i].h)); // bottom right
+		float newBoxH2 = (sin(angle)*boxes[i].w + cos(angle)*(-boxes[i].h));
+
+		float newBoxW3 = (cos(angle)*(-boxes[i].w) - sin(angle)*(-boxes[i].h)); // bottom left
+		float newBoxH3 = (sin(angle)*(-boxes[i].w) + cos(angle)*(-boxes[i].h));
+
+		float newBoxW4 = (cos(angle)*(-boxes[i].w) - sin(angle)*boxes[i].h); // top left
+		float newBoxH4 = (sin(angle)*(-boxes[i].w) + cos(angle)*boxes[i].h);
+		
+		float newBoxW = fmax(fmax(newBoxW1, newBoxW2), fmax(newBoxW3, newBoxW4));
+		float newBoxH = fmax(fmax(newBoxH1, newBoxH2), fmax(newBoxH3, newBoxH4));
+		/*
 		float newBoxCenterX = cos(angle)*(boxes[i].x-0.5f) - sin(angle)*(boxes[i].y-0.5f) + 0.5f;
 		float newBoxCenterY = sin(angle)*(boxes[i].x-0.5f) + cos(angle)*(boxes[i].y-0.5f) + 0.5f;
 		
@@ -230,8 +250,19 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
         boxes[i].y = newBoxCenterY;
         boxes[i].w = newBoxW;
         boxes[i].h = newBoxH;
+		*/
 		
+		boxes[i].left =  constrain(0, 1, newCenterX - (newBoxW / 2.0f));
+        boxes[i].right = constrain(0, 1, newCenterX + (newBoxW / 2.0f));
+        boxes[i].top =   constrain(0, 1, newCenterY - (newBoxH / 2.0f));
+        boxes[i].bottom =   constrain(0, 1, newCenterY + (newBoxH / 2.0f));
 
+        boxes[i].x = (boxes[i].left+boxes[i].right)/2;
+        boxes[i].y = (boxes[i].top+boxes[i].bottom)/2;
+        boxes[i].w = (boxes[i].right - boxes[i].left);
+        boxes[i].h = (boxes[i].bottom - boxes[i].top);
+		
+		
         boxes[i].w = constrain(0, 1, boxes[i].w);
         boxes[i].h = constrain(0, 1, boxes[i].h);
     }

@@ -491,9 +491,9 @@ int main(int argc, char **argv)
 	} else if (0 == strcmp(argv[1], "test_img_rotate")) {
 		char* testImage[] = {"data/obj/voc_2010_002978.jpg", "data/obj/voc_2010_002978.jpg", "data/obj/SUNRGBD_img8007.jpg", "data/obj/SUNRGBD_img8213.jpg", "data/obj/voc_2008_001154.jpg", "data/obj/SUNRGBD_img477.jpg", "data/obj/voc_2009_003489.jpg", "data/obj/SUNRGBD_img7085.jpg", "data/obj/voc_007265.jpg", "data/obj/voc_000630.jpg", "data/obj/voc_2011_003109.jpg", "data/obj/voc_2011_001582.jpg", "data/obj/SUNRGBD_img5646.jpg", "data/obj/voc_006090.jpg", "data/obj/SUNRGBD_img2524.jpg", "data/obj/voc_2009_002301.jpg", "data/obj/SUNRGBD_img9686.jpg", "data/obj/SUNRGBD_img7596.jpg", "data/obj/voc_2009_001881.jpg", "data/obj/voc_2008_000495.jpg", "data/obj/voc_008147.jpg"};
 		
-		printf("Hello world!0");
+		printf("Hello world!0\n");
 		load_data_detection(20, testImage, 0, 416, 416, 3, 90, 1, 1, 0.2f, 0.01f, 0.5f * rand_normal(), 0.1f, 1.5f, 1.5f, 0);
-		printf("Hello world!2");
+		printf("Hello world!2\n");
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);
     } else if (0 == strcmp(argv[1], "go")){

@@ -489,7 +489,7 @@ int main(int argc, char **argv)
 			save_image_png(orig, tmp);
 		}
 	} else if (0 == strcmp(argv[1], "test_img_rotate")) {
-		
+		char** testImage = {"data/obj/voc_2010_002978.jpg"};
 		for (i = 0; i < 20; i ++) {
 			// image orig = load_image("test_image.jpg", 0, 0, 0);
 			// noise = rand_normal() * noise;
@@ -498,40 +498,7 @@ int main(int argc, char **argv)
 			// sprintf(tmp, "noisy_image_%d", i);
 			// save_image_png(orig, tmp);
 			
-			/*
-    args.paths = paths;
-    args.n = imgs;
-    args.m = plist->size;
-    args.classes = classes;
-    args.flip = net.flip;
-    args.jitter = jitter;
-    args.num_boxes = l.max_boxes;
-    args.small_object = net.small_object;
-    args.d = &buffer;
-    args.type = DETECTION_DATA;
-    args.threads = 64;    // 16 or 64
-	
-	angle=0.4
-# saturation, exposure and hue values - ranges for random changes of colours of images during training (params for data augumentation), in terms of HSV: https://en.wikipedia.org/wiki/HSL_and_HSV
-# The larger the value, the more invariance would neural network to change of lighting and color of the objects.
-saturation = 1.5
-exposure = 1.5
-hue=.1
-# jitter can be [0-1] and used to crop images during training for data augumentation. The larger the value of jitter, the more invariance would neural network to change of size and aspect ratio of the objects.
-jitter=0.2
-# flip=1 means probability of flipping an image is 50%
-flip=1
-# amount of noise to be added to images. For each image a new value is generated: image_noise = rand_normal() * noise
-noise=0.2
-	
-	args.noise = net.noise;
-    args.angle = net.angle;
-    args.exposure = net.exposure;
-    args.saturation = net.saturation;
-    args.hue = net.hue;
-			*/
-			
-			//load_data_detection(a.n, a.paths, a.m, 416, 416, 3, a.num_boxes, a.classes, 1, 0.2f, 0.2f, 0.4f, 0.1f, 1.5f, 1.5f, a.small_object);
+			load_data_detection(1, testImage, 0, 416, 416, 3, 90, 1, 1, 0.2f, 0.2f, 0.5f * rand_normal(), 0.1f, 1.5f, 1.5f, 0);
 		}
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);

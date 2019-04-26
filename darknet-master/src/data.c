@@ -879,7 +879,9 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 			
 			draw_box_width(ai, left, top, right, bot, 1, 1.0f, 0, 0);
 		}
-        save_image(ai, "test_image");
+		char tmpBuff[32];
+		sprintf(tmpBuff, "test_image_%d", i);
+        save_image(ai, tmpBuff);
 		
 		
         cvReleaseImage(&src);

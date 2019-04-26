@@ -489,7 +489,7 @@ int main(int argc, char **argv)
 			save_image_png(orig, tmp);
 		}
 	} else if (0 == strcmp(argv[1], "test_img_rotate")) {
-		char** testImage = {"data/obj/voc_2010_002978.jpg"};
+		char* testImage[] = {"data/obj/voc_2010_002978.jpg"};
 		for (i = 0; i < 20; i ++) {
 			// image orig = load_image("test_image.jpg", 0, 0, 0);
 			// noise = rand_normal() * noise;
@@ -498,7 +498,7 @@ int main(int argc, char **argv)
 			// sprintf(tmp, "noisy_image_%d", i);
 			// save_image_png(orig, tmp);
 			
-			load_data_detection(1, testImage, 0, 416, 416, 3, 90, 1, 1, 0.2f, 0.2f, 0.5f * rand_normal(), 0.1f, 1.5f, 1.5f, 0);
+			load_data_detection(20, testImage, 0, 416, 416, 3, 90, 1, 1, 0.2f, 0.01f, 0.5f * rand_normal(), 0.1f, 1.5f, 1.5f, 0);
 		}
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);

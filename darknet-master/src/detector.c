@@ -154,7 +154,9 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     args.hue = net.hue;
 	
 	printf("a.n = %f\n", args.n);
-	printf("a.paths[0] = %s\n", args.paths[0]);
+	for (i = 0; i < 20; i ++) {
+		printf("a.paths[%d] = %s\n", i, args.paths[i]);
+	}
 	printf("a.m = %f\n", args.m);
 	printf("a.num_boxes = %d\n", args.num_boxes);
 	printf("a.classes = %d\n", args.classes);

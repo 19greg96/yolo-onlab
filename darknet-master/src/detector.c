@@ -152,7 +152,9 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     args.exposure = net.exposure;
     args.saturation = net.saturation;
     args.hue = net.hue;
-
+	
+	printf("a.n = %f, a.paths[0] = %s, a.m = %f, a.num_boxes = %d, a.classes = %d, a.small_object = %d\n", a.n, a.paths[0], a.m, a.num_boxes, a.classes, a.small_object);
+	
 #ifdef OPENCV
     args.threads = 3 * ngpus;   // Amazon EC2 Tesla V100: p3.2xlarge (8 logical cores) - p3.16xlarge
     //args.threads = 12 * ngpus;    // Ryzen 7 2700X (16 logical cores)

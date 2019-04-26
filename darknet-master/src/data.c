@@ -857,7 +857,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         //cvWaitKey(0);
 
         fill_truth_detection(filename, boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
-		
+		printf("Hello world!");
 		// debug save image
 		float x, y, w, h;
 		for (int j = 0; j < boxes; j ++) {

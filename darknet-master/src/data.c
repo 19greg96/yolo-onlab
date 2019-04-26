@@ -877,7 +877,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 		char tmpBuff[32];
 		sprintf(tmpBuff, "test_image_%d", i);
         save_image(ai, tmpBuff);
-		printf("save: %s\n", tmpBuff);
+		printf("save: %s %s\n", tmpBuff, filename);
 		
 		
         cvReleaseImage(&src);

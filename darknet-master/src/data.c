@@ -233,17 +233,17 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
 		// angle: 4.71, ncx: 0.64, ncy: 0.40, x: 0.60, y: 0.64
 		// angle: 1.57, ncx: 0.36, ncy: 0.60, x: 0.60, y: 0.64
 		
-		float newBoxW1 = (cos(angle)*boxes[i].w - sin(angle)*boxes[i].h); // top right
-		float newBoxH1 = (sin(angle)*boxes[i].w + cos(angle)*boxes[i].h);
+		float newBoxW1 = (cos(angle)*boxes[i].w + sin(angle)*boxes[i].h); // top right
+		float newBoxH1 = (-sin(angle)*boxes[i].w + cos(angle)*boxes[i].h);
 
-		float newBoxW2 = (cos(angle)*boxes[i].w - sin(angle)*(-boxes[i].h)); // bottom right
-		float newBoxH2 = (sin(angle)*boxes[i].w + cos(angle)*(-boxes[i].h));
+		float newBoxW2 = (cos(angle)*boxes[i].w + sin(angle)*(-boxes[i].h)); // bottom right
+		float newBoxH2 = (-sin(angle)*boxes[i].w + cos(angle)*(-boxes[i].h));
 
-		float newBoxW3 = (cos(angle)*(-boxes[i].w) - sin(angle)*(-boxes[i].h)); // bottom left
-		float newBoxH3 = (sin(angle)*(-boxes[i].w) + cos(angle)*(-boxes[i].h));
+		float newBoxW3 = (cos(angle)*(-boxes[i].w) + sin(angle)*(-boxes[i].h)); // bottom left
+		float newBoxH3 = (-sin(angle)*(-boxes[i].w) + cos(angle)*(-boxes[i].h));
 
-		float newBoxW4 = (cos(angle)*(-boxes[i].w) - sin(angle)*boxes[i].h); // top left
-		float newBoxH4 = (sin(angle)*(-boxes[i].w) + cos(angle)*boxes[i].h);
+		float newBoxW4 = (cos(angle)*(-boxes[i].w) + sin(angle)*boxes[i].h); // top left
+		float newBoxH4 = (-sin(angle)*(-boxes[i].w) + cos(angle)*boxes[i].h);
 		
 		float newBoxW = fmax(fmax(newBoxW1, newBoxW2), fmax(newBoxW3, newBoxW4));
 		float newBoxH = fmax(fmax(newBoxH1, newBoxH2), fmax(newBoxH3, newBoxH4));

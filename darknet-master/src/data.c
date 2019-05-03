@@ -223,7 +223,7 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
 		
 		// rotate box
 		float newCenterX = (cos(angle)*(boxes[i].x - 0.5f) - sin(angle)*(boxes[i].y - 0.5f)) + 0.5f;
-		float newCenterY = (sin(angle)*(boxes[i].x - 0.5f) + cos(angle)*(boxes[i].y - 0.5f)) + 0.5f;
+		float newCenterY = (sin(angle)*(boxes[i].x - 0.5f) - cos(angle)*(boxes[i].y - 0.5f)) + 0.5f;
 		
 		float newBoxW1 = (cos(angle)*boxes[i].w - sin(angle)*boxes[i].h); // top right
 		float newBoxH1 = (sin(angle)*boxes[i].w + cos(angle)*boxes[i].h);

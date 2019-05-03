@@ -493,8 +493,8 @@ int main(int argc, char **argv)
 		
 		float angle = find_float_arg(argc, argv, "-angle", .4f);
 		
-		//load_data_detection(20, testImage, 20, 416, 416, 3, 90, 1, 1, 0.2f, 0.01f, angle, 0.1f, 1.5f, 1.5f, 0);
-		load_data_detection(20, testImage, 20, 416, 416, 3, 90, 1, 1, 0.0f, 0.0f, angle, 0.0f, 0.0f, 0.0f, 0);
+		load_data_detection(20, testImage, 20, 416, 416, 3, 90, 1, 1, 0.2f, 0.01f, angle, 0.1f, 1.5f, 1.5f, 0);
+		//load_data_detection(20, testImage, 20, 416, 416, 3, 90, 1, 1, 0.0f, 0.0f, angle, 0.0f, 0.0f, 0.0f, 0);
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);
     } else if (0 == strcmp(argv[1], "go")){

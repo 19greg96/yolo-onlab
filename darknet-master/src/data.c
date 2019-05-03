@@ -222,10 +222,16 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
 		
 		
 		// rotate box
+		/*
+		float rx = cos(rad)*(x-cx) - sin(rad)*(y-cy) + cx;
+        float ry = sin(rad)*(x-cx) + cos(rad)*(y-cy) + cy;
+		*/
 		float newCenterX = (cos(angle)*(boxes[i].x - 0.5f) - sin(angle)*(boxes[i].y - 0.5f)) + 0.5f;
 		float newCenterY = (sin(angle)*(boxes[i].x - 0.5f) + cos(angle)*(boxes[i].y - 0.5f)) + 0.5f;
-		printf("angle: %.2f, ncx: %.2f, ncy: %.2f, x: %.2f, y: %.2f\n", angle, newCenterX, newCenterX, boxes[i].x, boxes[i].y);
-		
+		printf("angle: %.2f, ncx: %.2f, ncy: %.2f, x: %.2f, y: %.2f\n", angle, newCenterX, newCenterY, boxes[i].x, boxes[i].y);
+		// angle: 0.00, ncx: 0.60, ncy: 0.60, x: 0.60, y: 0.64
+		// angle: 4.71, ncx: 0.64, ncy: 0.64, x: 0.60, y: 0.64
+		// angle: 1.57, ncx: 0.36, ncy: 0.36, x: 0.60, y: 0.64
 		
 		float newBoxW1 = (cos(angle)*boxes[i].w - sin(angle)*boxes[i].h); // top right
 		float newBoxH1 = (sin(angle)*boxes[i].w + cos(angle)*boxes[i].h);

@@ -26,7 +26,7 @@ void forward_dropout_layer_gpu(dropout_layer layer, network_state state)
     }
     cuda_push_array(layer.rand_gpu, layer.rand, size);
     */
-
+	printf("forward dropout: size: %d, inputs: %d, outputs: %d, batch: %d\n", size, layer.inputs, layer.outputs, layer.batch);
     yoloswag420blazeit360noscope<<<cuda_gridsize(size), BLOCK, 0, get_cuda_stream() >>>(state.input, size, layer.rand_gpu, layer.probability, layer.scale);
     CHECK_CUDA(cudaPeekAtLastError());
 	

@@ -228,7 +228,7 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
 		*/
 		float newCenterX = (cos(angle)*(boxes[i].x - 0.5f) + sin(angle)*(boxes[i].y - 0.5f)) + 0.5f;
 		float newCenterY = (-sin(angle)*(boxes[i].x - 0.5f) + cos(angle)*(boxes[i].y - 0.5f)) + 0.5f;
-		printf("angle: %.2f, ncx: %.2f, ncy: %.2f, x: %.2f, y: %.2f\n", angle, newCenterX, newCenterY, boxes[i].x, boxes[i].y);
+		// printf("angle: %.2f, ncx: %.2f, ncy: %.2f, x: %.2f, y: %.2f\n", angle, newCenterX, newCenterY, boxes[i].x, boxes[i].y);
 		// angle: 0.00, ncx: 0.60, ncy: 0.64, x: 0.60, y: 0.64
 		// angle: 4.71, ncx: 0.64, ncy: 0.40, x: 0.60, y: 0.64
 		// angle: 1.57, ncx: 0.36, ncy: 0.60, x: 0.60, y: 0.64
@@ -265,17 +265,17 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
         boxes[i].top =   constrain(0, 1, newCenterY - (newBoxH / 2.0f));
         boxes[i].bottom =   constrain(0, 1, newCenterY + (newBoxH / 2.0f));
 		
-		/*
+		
         boxes[i].x = (boxes[i].left+boxes[i].right)/2;
         boxes[i].y = (boxes[i].top+boxes[i].bottom)/2;
         boxes[i].w = (boxes[i].right - boxes[i].left);
         boxes[i].h = (boxes[i].bottom - boxes[i].top);
-		*/
+		/*
 		boxes[i].x = newCenterX;
         boxes[i].y = newCenterY;
         boxes[i].w = newBoxW;
         boxes[i].h = newBoxH;
-		
+		*/
         boxes[i].w = constrain(0, 1, boxes[i].w);
         boxes[i].h = constrain(0, 1, boxes[i].h);
     }

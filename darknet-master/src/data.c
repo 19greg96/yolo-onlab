@@ -867,6 +867,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         //cvWaitKey(0);
         fill_truth_detection(filename, boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
 		// debug save image
+		/*
 		float x, y, w, h;
 		for (int j = 0; j < boxes; j ++) {
 			x = d.y.vals[i][j*5+0];
@@ -891,7 +892,7 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 		sprintf(tmpBuff, "test_image_%d", i);
         save_image(ai, tmpBuff);
 		printf("save: %s %s\n", tmpBuff, filename);
-		
+		*/
 		
         cvReleaseImage(&src);
     }

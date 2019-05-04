@@ -153,6 +153,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     args.saturation = net.saturation;
     args.hue = net.hue;
 	
+	/*
 	printf("a.n = %f\n", args.n);
 	for (i = 0; i < 20; i ++) {
 		printf("a.paths[%d] = %s\n", i, args.paths[i]);
@@ -161,6 +162,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
 	printf("a.num_boxes = %d\n", args.num_boxes);
 	printf("a.classes = %d\n", args.classes);
 	printf("a.small_object = %d\n", args.small_object);
+	*/
 	
 #ifdef OPENCV
     args.threads = 3 * ngpus;   // Amazon EC2 Tesla V100: p3.2xlarge (8 logical cores) - p3.16xlarge

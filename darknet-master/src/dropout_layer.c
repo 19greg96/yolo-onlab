@@ -33,7 +33,7 @@ void resize_dropout_layer(dropout_layer *l, int inputs)
 	l->inputs = inputs;
 	l->outputs = inputs;
 	
-	printf("resize: from inputs: %d, outputs: %d, to inputs: %d, outputs: %d, batch: %d\n", prevI, prevO, l->inputs, l->outputs, l->batch);
+	// printf("resize: from inputs: %d, outputs: %d, to inputs: %d, outputs: %d, batch: %d\n", prevI, prevO, l->inputs, l->outputs, l->batch);
 	
     l->rand = realloc(l->rand, inputs*l->batch*sizeof(float));
     #ifdef GPU

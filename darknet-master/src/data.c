@@ -857,7 +857,9 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 			random_noise_image(ai, noise);
 		}
 		if (angle > 0.001) {
-			ai = rotate_image(ai, angle);
+			image tmp = rotate_image(ai, angle);
+			free_image(ai);
+			ai = tmp;
 		}
 		// save_image_png(ai, "noisy_image"); // for testing
 		
@@ -946,16 +948,18 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 			random_noise_image(sized, noise);
 		}
 		if (angle > 0.001) {
-			sized = rotate_image(sized, angle);
+			image tmp = rotate_image(sized, angle);
+			free_image(sized);
+			sized = tmp;
 		}
 		// save_image_png(orig, "noisy_image"); // for testing
 		
         d.X.vals[i] = sized.data;
 
         fill_truth_detection(random_paths[i], boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1. / sx, 1. / sy, small_object, w, h);
-
-        free_image(orig);
-        free_image(cropped);
+		
+		free_image(orig);
+		free_image(cropped);
     }
     free(random_paths);
     return d;

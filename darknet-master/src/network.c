@@ -508,11 +508,11 @@ int resize_network(network *net, int w, int h)
 		}else if(l.type == DROPOUT) {
 			resize_dropout_layer(&l, inputs);
 			
-			l.output = net.layers[i-1].output;
-            l.delta = net.layers[i-1].delta;
+			l.output = net->layers[i-1].output;
+            l.delta = net->layers[i-1].delta;
 #ifdef GPU
-            l.output_gpu = net.layers[i-1].output_gpu;
-            l.delta_gpu = net.layers[i-1].delta_gpu;
+            l.output_gpu = net->layers[i-1].output_gpu;
+            l.delta_gpu = net->layers[i-1].delta_gpu;
 #endif
         }else{
             fprintf(stderr, "Resizing type %d \n", (int)l.type);

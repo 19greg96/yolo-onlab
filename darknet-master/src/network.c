@@ -508,6 +508,10 @@ int resize_network(network *net, int w, int h)
 		}else if(l.type == DROPOUT) {
 			resize_dropout_layer(&l, inputs);
 			
+			l.out_w = net->layers[i-1].out_w;
+			l.out_h = net->layers[i-1].out_h;
+			l.out_c = net->layers[i-1].out_c;
+			
 			l.output = net->layers[i-1].output;
             l.delta = net->layers[i-1].delta;
 #ifdef GPU

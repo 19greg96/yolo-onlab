@@ -27,8 +27,8 @@ dropout_layer make_dropout_layer(int batch, int inputs, float probability)
 
 void resize_dropout_layer(dropout_layer *l, int inputs)
 {
-	int prevI = l->inputs;
-	int prevO = l->outputs;
+	// int prevI = l->inputs;
+	// int prevO = l->outputs;
 	
 	l->inputs = inputs;
 	l->outputs = inputs;

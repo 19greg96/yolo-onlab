@@ -60,9 +60,9 @@ $outputPath = 'SUNRGBD_data/';
 function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $joinCategories, $onlabCategories, $outputPath, $allUnknownIsOther) {
 	$joinCategoryNames = array_keys($joinCategories);
 	$imagePath = false;
-	if (file_exists($entityPath . 'fullres/')) {
+	/*if (file_exists($entityPath . 'fullres/')) {
 		$imagePath = getFileFromDir($entityPath . 'fullres/', 'jpg');
-	}
+	}*/
 	if (!$imagePath) {
 		$imagePath = getFileFromDir($imgDir, 'jpg');
 	}
@@ -134,7 +134,7 @@ function createYOLOAnnotationForEntity($i, $entityPath, $imgDir, $annotation, $j
 	file_put_contents($outputPath . 'img' . $i . '.txt', $annotationLines);
 	copy($imagePath, $outputPath . 'img' . $i . '.jpg');
 	// exit();
-	return true;
+	return $imagePath;
 }
 
 // Format data
@@ -145,6 +145,8 @@ $numTrainFiles = round(count($dataEntityPaths) * $trainSplit);
 mkdir($outputPath);
 mkdir($outputPath . 'obj/');
 shuffle($dataEntityPaths);
+
+$log = "";
 for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 	$entityPath = $dataEntityPaths[$i] . "\\";
 	$imagePath = $entityPath . "image\\";
@@ -154,7 +156,7 @@ for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 	
 	$annotation = json_decode(file_get_contents(getFileFromDir($annotationPath, 'json')), true);
 	$fileCreateOK = createYOLOAnnotationForEntity($i, $entityPath, $imagePath, $annotation, $joinCategories, $onlabCategories, $outputPath . 'obj/', $allUnknownIsOther);
-	if (!$fileCreateOK) {
+	if ($fileCreateOK === false) {
 		continue;
 	}
 	if ($i < $numTrainFiles) {
@@ -162,6 +164,7 @@ for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 	} else {
 		$testFileNames .= $outputPath . 'obj/img' . $i . ".jpg\n";
 	}
+	$log .= $fileCreateOK . " => " . $outputPath . 'obj/img' . $i . ".jpg\n";
 	
 	if (isset($annotation['frames'][0]['polygon'])) {
 		$objects = $annotation['frames'][0]['polygon'];
@@ -181,6 +184,7 @@ for ($i = 0; $i < count($dataEntityPaths); $i ++) {
 		}
 	}
 }
+file_put_contents($outputPath . 'log.txt', $log);
 file_put_contents($outputPath . 'train_onlab.txt', $trainFileNames);
 file_put_contents($outputPath . 'test_onlab.txt', $testFileNames);
 

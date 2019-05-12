@@ -16,7 +16,7 @@ if (isset($_GET['path'])) {
 require_once("functions.php");
 
 
-$dir = "SUNRGBD_data/obj";
+$dir = "VOC_SUNRGBD_4/obj";
 $idx = intval($_GET['idx']) * 2; // txt and jpeg for each
 if (!isset($_GET['path'])) {
 	$files = scandir($dir . "/");

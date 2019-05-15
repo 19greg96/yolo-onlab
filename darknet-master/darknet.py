@@ -31,7 +31,7 @@ from ctypes import *
 import math
 import random
 import os
-import time
+#import time
 
 
 def sample(probs):
@@ -444,21 +444,28 @@ def performDetect(imagePath="test_office2.jpg", thresh=0.25, configPath = "./cfg
 
 if __name__ == "__main__":
   weights = "backup/yolo3-tiny-onlab_nocat_8000.weights"
-  config = "cfg/yolo3-tiny-onlab_nocat_test.cfg"
+  config = "cfg/yolo3-tiny-onlab_nocat_test_480.cfg"
   data_cfg = "cfg/onlab_nocat.data"
   image = "test_office2.jpg"
   
-  startTime = time.perf_counter()
-  performDetect(imagePath=image, thresh=0.1, configPath = config, weightPath = weights, metaPath= data_cfg, showImage= False, makeImageOnly = False, initOnly= True)
-  initTime = time.perf_counter() - startTime
+  import datetime
   
-  nImage = 1000
-  startTime = time.perf_counter()
+  
+  #startTime = time.perf_counter()
+  startTime = datetime.datetime.now()
+  performDetect(imagePath=image, thresh=0.1, configPath = config, weightPath = weights, metaPath= data_cfg, showImage= False, makeImageOnly = False, initOnly= True)
+  #initTime = time.perf_counter() - startTime
+  initTime = (datetime.datetime.now() - startTime).total_seconds() * 1000
+  
+  nImage = 100
+  #startTime = time.perf_counter()
+  startTime = datetime.datetime.now()
   for x in range(0, nImage):
     detections = performDetect(imagePath=image, thresh=0.1, configPath = config, weightPath = weights, metaPath= data_cfg, showImage= False, makeImageOnly = False, initOnly= False)
-  detectTime = time.perf_counter() - startTime
+  #detectTime = time.perf_counter() - startTime
+  detectTime = (datetime.datetime.now() - startTime).total_seconds() * 1000
   
-  print("Init time", initTime*1000, "[ms] Detect time", detectTime * 1000 / nImage, "[ms/image]")
+  print("Init time", initTime, "[ms] Detect time", detectTime / nImage, "[ms/image]")
 
 
 

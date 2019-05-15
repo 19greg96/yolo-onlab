@@ -1,0 +1,105 @@
+5*32:  160
+10*32: 320
+15*32: 480
+./darknet detector map cfg/onlab_nocat_0511_valid.data cfg/yolo3-tiny-onlab_nocat_160.cfg backup/yolo3-tiny-onlab_nocat_8000.weights
+./darknet detector valid cfg/onlab_nocat_0511_valid.data cfg/yolo3-tiny-onlab_nocat_160.cfg backup/yolo3-tiny-onlab_nocat_8000.weights
+./darknet detector test cfg/onlab_nocat.data cfg/yolo3-tiny-onlab_nocat_160.cfg backup/yolo3-tiny-onlab_nocat_8000.weights -i 0 -thresh 0.24 test_office.jpg
+
+./darknet detector map cfg/onlab_nocat_0511_valid.data cfg/yolo3-tiny-onlab_nocat_320.cfg backup/yolo3-tiny-onlab_nocat_8000.weights
+./darknet detector valid cfg/onlab_nocat_0511_valid.data cfg/yolo3-tiny-onlab_nocat_320.cfg backup/yolo3-tiny-onlab_nocat_8000.weights
+./darknet detector test cfg/onlab_nocat.data cfg/yolo3-tiny-onlab_nocat_320.cfg backup/yolo3-tiny-onlab_nocat_8000.weights -i 0 -thresh 0.24 test_office.jpg
+
+./darknet detector map cfg/onlab_nocat_0511_valid.data cfg/yolo3-tiny-onlab_nocat_480.cfg backup/yolo3-tiny-onlab_nocat_8000.weights
+./darknet detector valid cfg/onlab_nocat_0511_valid.data cfg/yolo3-tiny-onlab_nocat_480.cfg backup/yolo3-tiny-onlab_nocat_8000.weights
+./darknet detector test cfg/onlab_nocat.data cfg/yolo3-tiny-onlab_nocat_480.cfg backup/yolo3-tiny-onlab_nocat_8000.weights -i 0 -thresh 0.24 test_office.jpg
+
+
+OpenCL ----------------------------------------------
+		160				320				480
+1		0.690485s		1.184646s		1.601258s
+2		0.671883s		1.189200s		1.594664s
+3		0.669630s		1.177443s		1.598279s
+mAP 160
+
+mAP 320
+
+mAP 480	
+
+NUC ------------------------------------------------
+		160				320				480
+1		96.810000ms		341.925000ms	860.497000ms
+2		97.226000ms		337.121000ms	860.427000ms
+3		97.055000ms		337.405000ms	863.976000ms
+mAP 160
+ calculation mAP (mean average precision)...
+3184
+ detections_count = 114934, unique_truth_count = 13580
+class_id = 0, name = Object, 934 ap = 37.08 %
+ for thresh = 0.25, precision = 0.76, recall = 0.22, F1-score = 0.34
+ for thresh = 0.25, TP = 3017, FP = 942, FN = 10563, average IoU = 55.16 %
+
+ IoU threshold = 50 %
+ mean average precision (mAP@0.50) = 0.370777, or 37.08 %
+Total Detection Time: 310.000000 Seconds
+mAP 320
+
+mAP 480
+
+NUC + AVX ----------------------------------------------
+		160				320				480
+1		63.874000ms		146.892000ms	318.548000ms
+2		64.083000ms		146.431000ms	315.652000ms
+3		63.895000ms		146.036000ms	315.022000ms
+mAP 160
+ calculation mAP (mean average precision)...
+4 Used FMA & AVX2
+ Used AVX
+3184
+ detections_count = 114934, unique_truth_count = 13580
+class_id = 0, name = Object, 934 ap = 37.08 %
+ for thresh = 0.25, precision = 0.76, recall = 0.22, F1-score = 0.34
+ for thresh = 0.25, TP = 3017, FP = 942, FN = 10563, average IoU = 55.16 %
+
+ IoU threshold = 50 %
+ mean average precision (mAP@0.50) = 0.370777, or 37.08 %
+Total Detection Time: 206.000000 Seconds
+
+mAP 320
+ calculation mAP (mean average precision)...
+4 Used FMA & AVX2
+ Used AVX
+3184
+ detections_count = 164716, unique_truth_count = 13580
+class_id = 0, name = Object, 716 ap = 51.79 %
+ for thresh = 0.25, precision = 0.77, recall = 0.37, F1-score = 0.50
+ for thresh = 0.25, TP = 4965, FP = 1502, FN = 8615, average IoU = 56.60 %
+
+ IoU threshold = 50 %
+ mean average precision (mAP@0.50) = 0.517899, or 51.79 %
+Total Detection Time: 412.000000 Seconds
+
+
+mAP 480
+ calculation mAP (mean average precision)...
+4 Used FMA & AVX2
+ Used AVX
+3184
+ detections_count = 198729, unique_truth_count = 13580
+class_id = 0, name = Object, 729 ap = 53.43 %
+ for thresh = 0.25, precision = 0.70, recall = 0.41, F1-score = 0.52
+ for thresh = 0.25, TP = 5576, FP = 2410, FN = 8004, average IoU = 50.55 %
+
+ IoU threshold = 50 %
+ mean average precision (mAP@0.50) = 0.534252, or 53.43 %
+Total Detection Time: 843.000000 Seconds
+
+Asztali gép -------------------------------------------
+		160				320				480
+1		8.47ms			14.14ms			23.63ms
+2		
+3		
+mAP 160
+
+mAP 320
+
+mAP 480

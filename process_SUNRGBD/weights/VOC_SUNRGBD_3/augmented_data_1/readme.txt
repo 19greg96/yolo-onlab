@@ -1,0 +1,1 @@
+LR was set to too low after first LR decrease

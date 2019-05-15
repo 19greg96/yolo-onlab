@@ -1,4 +1,12 @@
 *.zip
 *.tar
 *.bak
-**/
+SUNRGBD_data/
+SUNRGBD_data_1/
+SUNRGBD_data_2/
+SUNRGBD_data_nocat/
+SUNRGBD_data_with_log/
+/VOC_SUNRGBD_1/
+/VOC_SUNRGBD_2/
+/VOC_SUNRGBD_3/
+/VOC_SUNRGBD_4/

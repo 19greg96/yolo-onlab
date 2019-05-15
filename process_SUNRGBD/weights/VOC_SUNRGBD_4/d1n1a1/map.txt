@@ -1,0 +1,46 @@
+
+
+layer     filters    size              input                output
+   0 conv     16  3 x 3 / 1   416 x 416 x   3   ->   416 x 416 x  16 0.150 BF
+   1 max          2 x 2 / 2   416 x 416 x  16   ->   208 x 208 x  16 0.003 BF
+   2 conv     32  3 x 3 / 1   208 x 208 x  16   ->   208 x 208 x  32 0.399 BF
+   3 max          2 x 2 / 2   208 x 208 x  32   ->   104 x 104 x  32 0.001 BF
+   4 conv     64  3 x 3 / 1   104 x 104 x  32   ->   104 x 104 x  64 0.399 BF
+   5 max          2 x 2 / 2   104 x 104 x  64   ->    52 x  52 x  64 0.001 BF
+   6 dropout       p = 0.15               173056  ->  173056
+   7 conv    128  3 x 3 / 1    52 x  52 x  64   ->    52 x  52 x 128 0.399 BF
+   8 max          2 x 2 / 2    52 x  52 x 128   ->    26 x  26 x 128 0.000 BF
+   9 conv    256  3 x 3 / 1    26 x  26 x 128   ->    26 x  26 x 256 0.399 BF
+  10 max          2 x 2 / 2    26 x  26 x 256   ->    13 x  13 x 256 0.000 BF
+  11 conv    512  3 x 3 / 1    13 x  13 x 256   ->    13 x  13 x 512 0.399 BF
+  12 max          2 x 2 / 1    13 x  13 x 512   ->    13 x  13 x 512 0.000 BF
+  13 dropout       p = 0.15               86528  ->  86528
+  14 conv   1024  3 x 3 / 1    13 x  13 x 512   ->    13 x  13 x1024 1.595 BF
+  15 conv    256  1 x 1 / 1    13 x  13 x1024   ->    13 x  13 x 256 0.089 BF
+  16 conv    512  3 x 3 / 1    13 x  13 x 256   ->    13 x  13 x 512 0.399 BF
+  17 conv     18  1 x 1 / 1    13 x  13 x 512   ->    13 x  13 x  18 0.003 BF
+  18 yolo
+  19 route  15
+  20 conv    128  1 x 1 / 1    13 x  13 x 256   ->    13 x  13 x 128 0.011 BF
+  21 upsample            2x    13 x  13 x 128   ->    26 x  26 x 128
+  22 route  21 8
+  23 conv    256  3 x 3 / 1    26 x  26 x 256   ->    26 x  26 x 256 0.797 BF
+  24 conv     18  1 x 1 / 1    26 x  26 x 256   ->    26 x  26 x  18 0.006 BF
+  25 yolo
+Total BFLOPS 5.049 
+ Allocate additional workspace_size = 24.92 MB 
+Loading weights from backup/yolo3-tiny-onlab_0513_last.weights...
+ seen 64 
+Done!
+
+ calculation mAP (mean average precision)...
+3184
+ detections_count = 167604, unique_truth_count = 13580  
+class_id = 0, name = Object, 	 ap = 51.75 % 
+ for thresh = 0.25, precision = 0.72, recall = 0.39, F1-score = 0.51 
+ for thresh = 0.25, TP = 5288, FP = 2069, FN = 8292, average IoU = 50.63 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.517462, or 51.75 % 
+Total Detection Time: 26.000000 Seconds
+

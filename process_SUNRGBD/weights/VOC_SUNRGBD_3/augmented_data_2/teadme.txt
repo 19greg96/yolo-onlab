@@ -1,0 +1,314 @@
+!./darknet detector test cfg/onlab_nocat.data cfg/yolo3-tiny-onlab_nocat_test.cfg backup/yolo3-tiny-onlab_nocat_last.weights test_office.jpg -thresh 0.1
+
+
+
+
+
+
+
+
+.00 %) - 1883 / 60024: 2.515064, 3.669005 avg loss, 0.005000 learning rate, 1.271712 seconds, 120512 images
+(mAP calc at 1889 iters. Last acc mAP@0.5 = -100.00 %) - 1884 / 60024: 4.398816, 3.741987 avg loss, 0.005000 learning rate, 1.284307 seconds, 120576 images
+(mAP calc at 1889 iters. Last acc mAP@0.5 = -100.00 %) - 1885 / 60024: 4.322284, 3.800016 avg loss, 0.005000 learning rate, 1.274146 seconds, 120640 images
+(mAP calc at 1889 iters. Last acc mAP@0.5 = -100.00 %) - 1886 / 60024: 4.007502, 3.820765 avg loss, 0.005000 learning rate, 1.302471 seconds, 120704 images
+(mAP calc at 1889 iters. Last acc mAP@0.5 = -100.00 %) - 1887 / 60024: 3.457659, 3.784454 avg loss, 0.005000 learning rate, 1.189723 seconds, 120768 images
+(mAP calc at 1889 iters. Last acc mAP@0.5 = -100.00 %) - 1888 / 60024: 3.454416, 3.751451 avg loss, 0.005000 learning rate, 1.272549 seconds, 120832 images
+(mAP calc at 1889 iters. Last acc mAP@0.5 = -100.00 %) - 1889 / 60024: 2.839389, 3.660244 avg loss, 0.005000 learning rate, 1.290779 seconds, 120896 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 139391, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 42.79 % 
+ for thresh = 0.25, precision = 0.70, recall = 0.31, F1-score = 0.43 
+ for thresh = 0.25, TP = 2033, FP = 887, FN = 4431, average IoU = 49.17 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.427852, or 42.79 % 
+Total Detection Time: 21.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.427852 
+
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 1890 / 60024: 3.738589, 3.668079 avg loss, 0.005000 learning rate, 1.587498 seconds, 120960 images
+Resizing: 448 x 448 
+ try to allocate additional workspace_size = 28.90 MB 
+ CUDA allocate done! 
+
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 1891 / 60024: 4.009718, 3.702243 avg loss, 0.005000 learning rate, 1.768455 seconds, 121024 images
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 1892 / 60024: 4.166147, 3.748633 avg loss, 0.005000 learning rate, 1.888910 seconds, 121088 images
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 1893 / 60024: 4.034083, 3.777178 avg loss, 0.005000 learning rate, 1.870323 seconds, 121152 images
+
+
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 3776 / 60024: 3.405564, 3.692844 avg loss, 0.005000 learning rate, 1.298611 seconds, 241664 images
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 3777 / 60024: 3.829227, 3.706482 avg loss, 0.005000 learning rate, 1.229280 seconds, 241728 images
+(mAP calc at 3778 iters. Last acc mAP@0.5 = 42.79 %) - 3778 / 60024: 2.724466, 3.608281 avg loss, 0.005000 learning rate, 1.205528 seconds, 241792 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 160377, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 42.03 % 
+ for thresh = 0.25, precision = 0.65, recall = 0.32, F1-score = 0.43 
+ for thresh = 0.25, TP = 2074, FP = 1129, FN = 4390, average IoU = 45.62 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.420308, or 42.03 % 
+Total Detection Time: 22.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.420308 
+
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3779 / 60024: 3.744002, 3.621853 avg loss, 0.005000 learning rate, 1.543582 seconds, 241856 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3780 / 60024: 3.076421, 3.567310 avg loss, 0.005000 learning rate, 1.656887 seconds, 241920 images
+Resizing: 384 x 384 
+ try to allocate additional workspace_size = 21.23 MB 
+ CUDA allocate done! 
+
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3781 / 60024: 3.153177, 3.525896 avg loss, 0.005000 learning rate, 1.375878 seconds, 241984 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3782 / 60024: 3.637093, 3.537016 avg loss, 0.005000 learning rate, 1.360839 seconds, 242048 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3783 / 60024: 3.365841, 3.519898 avg loss, 0.005000 learning rate, 1.449013 seconds, 242112 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3784 / 60024: 3.690527, 3.536961 avg loss, 0.005000 learning rate, 1.458479 seconds, 242176 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3785 / 60024: 3.171113, 3.500376 avg loss, 0.005000 learning rate, 1.363089 seconds, 242240 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3786 / 60024: 3.162528, 3.466592 avg loss, 0.005000 learning rate, 1.448046 seconds, 242304 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 3787 / 60024: 3.
+
+
+
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 5665 / 60024: 4.482828, 3.586154 avg loss, 0.005000 learning rate, 1.134768 seconds, 362560 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 5666 / 60024: 4.723445, 3.699883 avg loss, 0.005000 learning rate, 1.081880 seconds, 362624 images
+(mAP calc at 5667 iters. Last acc mAP@0.5 = 42.03 %) - 5667 / 60024: 2.999547, 3.629850 avg loss, 0.005000 learning rate, 1.069666 seconds, 362688 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 141055, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 42.51 % 
+ for thresh = 0.25, precision = 0.63, recall = 0.33, F1-score = 0.43 
+ for thresh = 0.25, TP = 2111, FP = 1265, FN = 4353, average IoU = 44.27 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.425143, or 42.51 % 
+Total Detection Time: 20.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.425143 
+
+(mAP calc at 7556 iters. Last acc mAP@0.5 = 42.51 %) - 5668 / 60024: 4.023433, 3.669208 avg loss, 0.005000 learning rate, 1.561781 seconds, 362752 images
+(mAP calc at 7556 iters. Last acc mAP@0.5 = 42.51 %) - 5669 / 60024: 3.415848, 3.643872 avg loss, 0.005000 learning rate, 1.576797 seconds, 362816 images
+(mAP calc at 7556 iters. Last acc mAP@0.5 = 42.51 %) - 5670 / 60024: 4.502835, 3.729768 avg loss, 0.005000 learning rate, 1.574732 seconds, 362880 images
+Resizing: 448 x 448 
+
+
+
+= -100.00 %) - 7585 / 60024: 3.511138, 3.389182 avg loss, 0.005000 learning rate, 1.198442 seconds, 485440 images
+(mAP calc at 7589 iters. Last acc mAP@0.5 = -100.00 %) - 7586 / 60024: 3.711859, 3.421449 avg loss, 0.005000 learning rate, 1.107175 seconds, 485504 images
+(mAP calc at 7589 iters. Last acc mAP@0.5 = -100.00 %) - 7587 / 60024: 2.865453, 3.365850 avg loss, 0.005000 learning rate, 1.187908 seconds, 485568 images
+(mAP calc at 7589 iters. Last acc mAP@0.5 = -100.00 %) - 7588 / 60024: 4.156213, 3.444886 avg loss, 0.005000 learning rate, 1.111053 seconds, 485632 images
+(mAP calc at 7589 iters. Last acc mAP@0.5 = -100.00 %) - 7589 / 60024: 3.344441, 3.434842 avg loss, 0.005000 learning rate, 1.190795 seconds, 485696 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 134067, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 46.31 % 
+ for thresh = 0.25, precision = 0.62, recall = 0.39, F1-score = 0.48 
+ for thresh = 0.25, TP = 2513, FP = 1519, FN = 3951, average IoU = 44.67 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.463139, or 46.31 % 
+Total Detection Time: 20.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.463139 
+
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 7590 / 60024: 4.212605, 3.512618 avg loss, 0.005000 learning rate, 1.668293 seconds, 485760 images
+Resizing: 512 x 512 
+ try to allocate additional workspace_size = 37.75 MB 
+ CUDA allocate done! 
+
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 7591 / 60024: 2.880343, 3.449391 avg loss, 0.005000 learning rate, 2.446365 seconds, 485824 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 7592 / 60024: 3.401645, 3.444616 avg loss, 0.005000 learning rate, 2.312657 seconds, 485888 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 7593 / 60024: 3.746939, 3.474848 avg loss, 0.005000 learning rate, 2.333602 seconds, 485952 images
+
+
+
+
+
+
+
+78 iters. Last acc mAP@0.5 = 46.31 %) - 9473 / 60024: 2.738128, 3.525429 avg loss, 0.005000 learning rate, 1.200278 seconds, 606272 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 9474 / 60024: 3.644237, 3.537310 avg loss, 0.005000 learning rate, 1.203650 seconds, 606336 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 9475 / 60024: 3.031237, 3.486703 avg loss, 0.005000 learning rate, 1.125687 seconds, 606400 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 9476 / 60024: 3.447822, 3.482815 avg loss, 0.005000 learning rate, 1.210316 seconds, 606464 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 9477 / 60024: 2.577331, 3.392266 avg loss, 0.005000 learning rate, 1.119393 seconds, 606528 images
+(mAP calc at 9478 iters. Last acc mAP@0.5 = 46.31 %) - 9478 / 60024: 2.709453, 3.323985 avg loss, 0.005000 learning rate, 1.196534 seconds, 606592 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 96702, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 48.44 % 
+ for thresh = 0.25, precision = 0.73, recall = 0.35, F1-score = 0.48 
+ for thresh = 0.25, TP = 2292, FP = 842, FN = 4172, average IoU = 52.90 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.484401, or 48.44 % 
+Total Detection Time: 20.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.484401 
+
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 9479 / 60024: 3.131818, 3.304768 avg loss, 0.005000 learning rate, 1.684608 seconds, 606656 images
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 9480 / 60024: 2.537293, 3.228021 avg loss, 0.005000 learning rate, 1.824375 seconds, 606720 images
+Resizing: 480 x 480 
+ try to allocate additional workspace_size = 33.18 MB 
+ CUDA allocate done! 
+
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 9481 / 60024: 4.042277, 3.309446 avg loss, 0.005000 learning rate, 2.245328 seconds, 606784 images
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 9482 / 60024: 2.873800, 3.265882 avg loss, 0.005000 learning rate, 2.339554 seconds, 606848 images
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 9483 / 60024: 3.857203, 3.325014 avg loss, 0.005000 learning rate, 2.215492 seconds, 606912 images
+
+
+
+
+
+
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 11365 / 60024: 2.955634, 3.304668 avg loss, 0.005000 learning rate, 1.566821 seconds, 727360 images
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 11366 / 60024: 4.988810, 3.473082 avg loss, 0.005000 learning rate, 1.607389 seconds, 727424 images
+(mAP calc at 11367 iters. Last acc mAP@0.5 = 48.44 %) - 11367 / 60024: 3.703910, 3.496165 avg loss, 0.005000 learning rate, 1.479580 seconds, 727488 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 73812, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 47.11 % 
+ for thresh = 0.25, precision = 0.74, recall = 0.31, F1-score = 0.44 
+ for thresh = 0.25, TP = 2029, FP = 696, FN = 4435, average IoU = 54.14 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.471073, or 47.11 % 
+Total Detection Time: 20.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.471073 
+
+(mAP calc at 13256 iters. Last acc mAP@0.5 = 47.11 %) - 11368 / 60024: 4.007662, 3.547314 avg loss, 0.005000 learning rate, 1.697710 seconds, 727552 images
+(mAP calc at 13256 iters. Last acc mAP@0.5 = 47.11 %) - 11369 / 60024: 3.192171, 3.511800 avg loss, 0.005000 learning rate, 1.633820 seconds, 727616 images
+(mAP calc at 13256 iters. Last acc mAP@0.5 = 47.11 %) - 11370 / 60024: 2.597491, 3.420369 avg loss, 0.005000 learning rate, 1.739691 seconds, 727680 images
+Resizing: 480 x 480 
+ try to allocate additional workspace_size = 33.18 MB 
+ CUDA allocate done! 
+ 
+ 
+(mAP calc at 13256 iters. Last acc mAP@0.5 = 47.11 %) - 13254 / 60024: 3.644021, 3.302560 avg loss, 0.005000 learning rate, 1.672196 seconds, 848256 images
+(mAP calc at 13256 iters. Last acc mAP@0.5 = 47.11 %) - 13255 / 60024: 3.674568, 3.339761 avg loss, 0.005000 learning rate, 1.823355 seconds, 848320 images
+(mAP calc at 13256 iters. Last acc mAP@0.5 = 47.11 %) - 13256 / 60024: 3.275639, 3.333349 avg loss, 0.005000 learning rate, 1.669049 seconds, 848384 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 69605, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 47.40 % 
+ for thresh = 0.25, precision = 0.76, recall = 0.31, F1-score = 0.44 
+ for thresh = 0.25, TP = 1997, FP = 625, FN = 4467, average IoU = 55.37 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.474017, or 47.40 % 
+Total Detection Time: 21.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.474017 
+
+(mAP calc at 15145 iters. Last acc mAP@0.5 = 47.40 %) - 13257 / 60024: 3.166378, 3.316652 avg loss, 0.005000 learning rate, 1.679172 seconds, 848448 images
+(mAP calc at 15145 iters. Last acc mAP@0.5 = 47.40 %) - 13258 / 60024: 3.025235, 3.287510 avg loss, 0.005000 learning rate, 1.771290 seconds, 848512 images
+(mAP calc at 15145 iters. Last acc mAP@0.5 = 47.40 %) - 13259 / 60024: 3.200727, 3.278832 avg loss, 0.005000 learning rate, 1.797397 seconds, 848576 images
+(mAP calc at 15145 iters. Last acc mAP@0.5 = 47.40 %) - 13260 / 60024: 3.892008, 3.340150 avg loss, 0.005000 learning rate, 1.687926 seconds, 848640 images
+Resizing: 480 x 480 
+ try to allocate additional workspace_size = 33.18 MB 
+
+
+
+(mAP calc at 15145 iters. Last acc mAP@0.5 = 47.40 %) - 15144 / 60024: 3.963510, 3.564220 avg loss, 0.005000 learning rate, 2.262209 seconds, 969216 images
+(mAP calc at 15145 iters. Last acc mAP@0.5 = 47.40 %) - 15145 / 60024: 3.589300, 3.566728 avg loss, 0.005000 learning rate, 2.476013 seconds, 969280 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 67177, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 48.41 % 
+ for thresh = 0.25, precision = 0.77, recall = 0.31, F1-score = 0.44 
+ for thresh = 0.25, TP = 1984, FP = 581, FN = 4480, average IoU = 56.83 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.484133, or 48.41 % 
+Total Detection Time: 21.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.484133 
+
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 15146 / 60024: 3.289869, 3.539042 avg loss, 0.005000 learning rate, 1.645396 seconds, 969344 images
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 15147 / 60024: 4.054392, 3.590577 avg loss, 0.005000 learning rate, 1.773865 seconds, 969408 images
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 15148 / 60024: 4.066044, 3.638124 avg loss, 0.005000 learning rate, 1.806308 seconds, 969472 images
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 15149 / 60024: 3.773026, 3.651614 avg loss, 0.005000 learning rate, 1.647269 seconds, 969536 images
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 15150 / 60024: 3.036175, 3.590070 avg loss,
+
+
+
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 17032 / 60024: 3.758965, 3.274814 avg loss, 0.005000 learning rate, 1.764239 seconds, 1090048 images
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 17033 / 60024: 3.232435, 3.270576 avg loss, 0.005000 learning rate, 1.778107 seconds, 1090112 images
+(mAP calc at 17034 iters. Last acc mAP@0.5 = 48.41 %) - 17034 / 60024: 2.958217, 3.239340 avg loss, 0.005000 learning rate, 1.769158 seconds, 1090176 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 77209, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 48.16 % 
+ for thresh = 0.25, precision = 0.71, recall = 0.36, F1-score = 0.48 
+ for thresh = 0.25, TP = 2322, FP = 962, FN = 4142, average IoU = 51.35 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.481586, or 48.16 % 
+Total Detection Time: 20.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.481586 
+
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 17035 / 60024: 3.018141, 3.217220 avg loss, 0.005000 learning rate, 1.702495 seconds, 1090240 images
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 17036 / 60024: 2.727576, 3.168256 avg loss, 0.005000 learning rate, 1.645782 seconds, 1090304 images
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 17037 / 60024: 3.051812, 3.156611 avg loss, 0.005000 learning rate, 1.766333 seconds, 1090368 images
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 17038 / 60024: 3.523488, 3.193299 avg loss, 0.005000 learning rate, 1.810188 seconds, 1090432 images
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 170
+
+
+
+
+.5 = 48.16 %) - 18920 / 60024: 3.120603, 3.443445 avg loss, 0.005000 learning rate, 1.696122 seconds, 1210880 images
+Resizing: 608 x 608 
+ try to allocate additional workspace_size = 53.23 MB 
+ CUDA allocate done! 
+
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 18921 / 60024: 4.243352, 3.523436 avg loss, 0.005000 learning rate, 3.377734 seconds, 1210944 images
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 18922 / 60024: 3.511184, 3.522211 avg loss, 0.005000 learning rate, 3.280084 seconds, 1211008 images
+(mAP calc at 18923 iters. Last acc mAP@0.5 = 48.16 %) - 18923 / 60024: 3.285122, 3.498502 avg loss, 0.005000 learning rate, 3.212948 seconds, 1211072 imagesResizing to initial size: 416 x 416 
+ try to allocate additional workspace_size = 24.92 MB 
+ CUDA allocate done! 
+
+ calculation mAP (mean average precision)...
+1592
+ detections_count = 62663, unique_truth_count = 6464  
+class_id = 0, name = Object, 	 ap = 46.88 % 
+ for thresh = 0.25, precision = 0.77, recall = 0.29, F1-score = 0.42 
+ for thresh = 0.25, TP = 1846, FP = 549, FN = 4618, average IoU = 56.20 % 
+
+ IoU threshold = 50 % 
+ mean average precision (mAP@0.50) = 0.468838, or 46.88 % 
+Total Detection Time: 19.000000 Seconds
+
+ mean_average_precision (mAP@0.5) = 0.468838 
+
+(mAP calc at 20812 iters. Last acc mAP@0.5 = 46.88 %) - 18924 / 60024: 3.038596, 3.452511 avg loss, 0.005000 learning rate, 1.656617 seconds, 1211136 images
+(mAP calc at 20812 iters. Last acc mAP@0.5 = 46.88 %) - 18925 / 60024: 3.816247, 3.488885 avg loss, 0.005000 learning rate, 1.775137 seconds, 1211200 images
+(mAP calc at 20812 iters. Last acc mAP@0.5 = 46.88 %) - 18926 / 60024: 3.780750, 3.518071 avg loss, 0.005000 learning rate, 1.810189 seconds, 1211264 images
+(mAP calc at 20812 iters. Last acc mAP@0.5 = 46.88 %) - 18927 / 60024: 3.994206, 3.565685 avg loss, 0.005000 learning rate, 1.670783 seconds, 1211328 images
+(mAP calc at 20812 iters. Last acc mAP@0.5 = 46.88 %) - 18928 / 60024: 3.786955, 3.587812 avg loss, 0.005000 learning rate, 1.674349 seconds, 1211392 images

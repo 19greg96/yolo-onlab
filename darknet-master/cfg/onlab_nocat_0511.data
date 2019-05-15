@@ -1,0 +1,6 @@
+classes= 1
+train  = data_0511/train_onlab.txt
+valid  = data_0511/test_onlab.txt
+names = data_0511/onlab_nocat.names
+backup = backup
+

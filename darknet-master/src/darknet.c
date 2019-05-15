@@ -488,6 +488,13 @@ int main(int argc, char **argv)
 			sprintf(tmp, "noisy_image_%d", i);
 			save_image_png(orig, tmp);
 		}
+	} else if (0 == strcmp(argv[1], "test_img_rotate")) {
+		char* testImage[] = {"data/obj/voc_2010_002978.jpg", "data/obj/voc_2010_002978.jpg", "data/obj/SUNRGBD_img8007.jpg", "data/obj/SUNRGBD_img8213.jpg", "data/obj/voc_2008_001154.jpg", "data/obj/SUNRGBD_img477.jpg", "data/obj/voc_2009_003489.jpg", "data/obj/SUNRGBD_img7085.jpg", "data/obj/voc_007265.jpg", "data/obj/voc_000630.jpg", "data/obj/voc_2011_003109.jpg", "data/obj/voc_2011_001582.jpg", "data/obj/SUNRGBD_img5646.jpg", "data/obj/voc_006090.jpg", "data/obj/SUNRGBD_img2524.jpg", "data/obj/voc_2009_002301.jpg", "data/obj/SUNRGBD_img9686.jpg", "data/obj/SUNRGBD_img7596.jpg", "data/obj/voc_2009_001881.jpg", "data/obj/voc_2008_000495.jpg", "data/obj/voc_008147.jpg"};
+		
+		float angle = find_float_arg(argc, argv, "-angle", .4f);
+		
+		load_data_detection(20, testImage, 20, 416, 416, 3, 90, 1, 1, 0.2f, 0.01f, angle, 0.1f, 1.5f, 1.5f, 0);
+		//load_data_detection(20, testImage, 20, 416, 416, 3, 90, 1, 1, 0.0f, 0.0f, angle, 0.0f, 0.0f, 0.0f, 0);
     } else if (0 == strcmp(argv[1], "cifar")){
         run_cifar(argc, argv);
     } else if (0 == strcmp(argv[1], "go")){

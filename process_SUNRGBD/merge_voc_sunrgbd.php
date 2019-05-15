@@ -57,7 +57,7 @@ Onlab categories:
 
 $path_VOC = "E:\\projekts\\datasets\\VOC\\voc\\";
 $path_SUNRGBD = "SUNRGBD_data/";
-$outputPath = "data/";
+$outputPath = "data_0511/";
 
 mkdir($outputPath);
 mkdir($outputPath . 'obj/');
@@ -86,7 +86,7 @@ $VOC_to_ONLAB_categories[17] = 0; // 17 - sofa			=>		0 - Chair
 $VOC_to_ONLAB_categories[18] = 5; // 18 - train			=>		5 - other
 $VOC_to_ONLAB_categories[19] = 5; // 19 - tvmonitor		=>		5 - other
 
-$trainSplit = 0.95;
+$trainSplit = 0.8;
 
 
 $test_voc = explode("\n", file_get_contents($path_VOC . 'test_voc.txt'));

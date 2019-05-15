@@ -197,6 +197,7 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
             boxes[i].h = 999999;
             continue;
         }
+		
         boxes[i].left   = boxes[i].left  * sx - dx;
         boxes[i].right  = boxes[i].right * sx - dx;
         boxes[i].top    = boxes[i].top   * sy - dy;
@@ -219,7 +220,34 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
         boxes[i].h = (boxes[i].bottom - boxes[i].top);
 		
 		
+		
 		// rotate box
+		/*
+		float rx = cos(rad)*(x-cx) - sin(rad)*(y-cy) + cx;
+        float ry = sin(rad)*(x-cx) + cos(rad)*(y-cy) + cy;
+		*/
+		float newCenterX = (cos(angle)*(boxes[i].x - 0.5f) + sin(angle)*(boxes[i].y - 0.5f)) + 0.5f;
+		float newCenterY = (-sin(angle)*(boxes[i].x - 0.5f) + cos(angle)*(boxes[i].y - 0.5f)) + 0.5f;
+		// printf("angle: %.2f, ncx: %.2f, ncy: %.2f, x: %.2f, y: %.2f\n", angle, newCenterX, newCenterY, boxes[i].x, boxes[i].y);
+		// angle: 0.00, ncx: 0.60, ncy: 0.64, x: 0.60, y: 0.64
+		// angle: 4.71, ncx: 0.64, ncy: 0.40, x: 0.60, y: 0.64
+		// angle: 1.57, ncx: 0.36, ncy: 0.60, x: 0.60, y: 0.64
+		
+		float newBoxW1 = (cos(angle)*boxes[i].w + sin(angle)*boxes[i].h); // top right
+		float newBoxH1 = (-sin(angle)*boxes[i].w + cos(angle)*boxes[i].h);
+
+		float newBoxW2 = (cos(angle)*boxes[i].w + sin(angle)*(-boxes[i].h)); // bottom right
+		float newBoxH2 = (-sin(angle)*boxes[i].w + cos(angle)*(-boxes[i].h));
+
+		float newBoxW3 = (cos(angle)*(-boxes[i].w) + sin(angle)*(-boxes[i].h)); // bottom left
+		float newBoxH3 = (-sin(angle)*(-boxes[i].w) + cos(angle)*(-boxes[i].h));
+
+		float newBoxW4 = (cos(angle)*(-boxes[i].w) + sin(angle)*boxes[i].h); // top left
+		float newBoxH4 = (-sin(angle)*(-boxes[i].w) + cos(angle)*boxes[i].h);
+		
+		float newBoxW = fmax(fmax(newBoxW1, newBoxW2), fmax(newBoxW3, newBoxW4));
+		float newBoxH = fmax(fmax(newBoxH1, newBoxH2), fmax(newBoxH3, newBoxH4));
+		/*
 		float newBoxCenterX = cos(angle)*(boxes[i].x-0.5f) - sin(angle)*(boxes[i].y-0.5f) + 0.5f;
 		float newBoxCenterY = sin(angle)*(boxes[i].x-0.5f) + cos(angle)*(boxes[i].y-0.5f) + 0.5f;
 		
@@ -230,8 +258,24 @@ void correct_boxes(box_label *boxes, int n, float dx, float dy, float sx, float 
         boxes[i].y = newBoxCenterY;
         boxes[i].w = newBoxW;
         boxes[i].h = newBoxH;
+		*/
 		
-
+		boxes[i].left =  constrain(0, 1, newCenterX - (newBoxW / 2.0f));
+        boxes[i].right = constrain(0, 1, newCenterX + (newBoxW / 2.0f));
+        boxes[i].top =   constrain(0, 1, newCenterY - (newBoxH / 2.0f));
+        boxes[i].bottom =   constrain(0, 1, newCenterY + (newBoxH / 2.0f));
+		
+		
+        boxes[i].x = (boxes[i].left+boxes[i].right)/2;
+        boxes[i].y = (boxes[i].top+boxes[i].bottom)/2;
+        boxes[i].w = (boxes[i].right - boxes[i].left);
+        boxes[i].h = (boxes[i].bottom - boxes[i].top);
+		/*
+		boxes[i].x = newCenterX;
+        boxes[i].y = newCenterY;
+        boxes[i].w = newBoxW;
+        boxes[i].h = newBoxH;
+		*/
         boxes[i].w = constrain(0, 1, boxes[i].w);
         boxes[i].h = constrain(0, 1, boxes[i].h);
     }
@@ -765,11 +809,9 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
     d.X.rows = n;
     d.X.vals = calloc(d.X.rows, sizeof(float*));
     d.X.cols = h*w*c;
-
     d.y = make_matrix(n, 5*boxes);
     for(i = 0; i < n; ++i){
         const char *filename = random_paths[i];
-
         int flag = (c >= 3);
         IplImage *src;
         if ((src = cvLoadImage(filename, flag)) == 0)
@@ -808,21 +850,52 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
         float dhue = rand_uniform_strong(-hue, hue);
         float dsat = rand_scale(saturation);
         float dexp = rand_scale(exposure);
-
         image ai = image_data_augmentation(src, w, h, pleft, ptop, swidth, sheight, flip, jitter, noise, dhue, dsat, dexp);
 		// CV noise generation implementation is started in image_data_augmentation(...); see http_stream.cpp
-		// if (noise > 0.000001) {
-			// random_noise_image(ai, noise);
-		// }
+		// CV implementation is currently disabled
+		if (noise > 0.000001) {
+			random_noise_image(ai, noise);
+		}
+		if (angle > 0.001) {
+			image tmp = rotate_image(ai, angle);
+			free_image(ai);
+			ai = tmp;
+		}
 		// save_image_png(ai, "noisy_image"); // for testing
 		
         d.X.vals[i] = ai.data;
 
         //show_image(ai, "aug");
         //cvWaitKey(0);
-
         fill_truth_detection(filename, boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1./sx, 1./sy, small_object, w, h);
+		// debug save image
+		/*
+		float x, y, w, h;
+		for (int j = 0; j < boxes; j ++) {
+			x = d.y.vals[i][j*5+0];
+			y = d.y.vals[i][j*5+1];
+			w = d.y.vals[i][j*5+2];
+			h = d.y.vals[i][j*5+3];
+			// d.y.vals[i][j*5+4] = id;
+			
+			int left  = (x-w/2.)*ai.w;
+			int right = (x+w/2.)*ai.w;
+			int top   = (y-h/2.)*ai.h;
+			int bot   = (y+h/2.)*ai.h;
 
+			if(left < 0) left = 0;
+			if(right > ai.w-1) right = ai.w-1;
+			if(top < 0) top = 0;
+			if(bot > ai.h-1) bot = ai.h-1;
+			
+			draw_box_width(ai, left, top, right, bot, 1, 1.0f, 0, 0);
+		}
+		char tmpBuff[32];
+		sprintf(tmpBuff, "test_image_%d", i);
+        save_image(ai, tmpBuff);
+		printf("save: %s %s\n", tmpBuff, filename);
+		*/
+		
         cvReleaseImage(&src);
     }
     free(random_paths);
@@ -875,16 +948,18 @@ data load_data_detection(int n, char **paths, int m, int w, int h, int c, int bo
 			random_noise_image(sized, noise);
 		}
 		if (angle > 0.001) {
-			sized = rotate_image(sized, angle);
+			image tmp = rotate_image(sized, angle);
+			free_image(sized);
+			sized = tmp;
 		}
 		// save_image_png(orig, "noisy_image"); // for testing
 		
         d.X.vals[i] = sized.data;
 
         fill_truth_detection(random_paths[i], boxes, d.y.vals[i], classes, angle, flip, dx, dy, 1. / sx, 1. / sy, small_object, w, h);
-
-        free_image(orig);
-        free_image(cropped);
+		
+		free_image(orig);
+		free_image(cropped);
     }
     free(random_paths);
     return d;
